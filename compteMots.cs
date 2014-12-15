@@ -23,7 +23,7 @@ public static void ouvrirFichier(string fichier)
     Console.Write("Lecture du dictionnaire, veuillez patienter...") ;
     
     string mot = monStreamReader.ReadLine(); 
-
+    Console.WriteLine(mot);
     // Lecture de tous les mots du dictionnaire (un par lignes) 
     while (mot != null) 
     { 
