@@ -9,6 +9,20 @@ namespace Projet_Info
 {
     class Program
     {
+        public struct Prenom
+        {
+            public string prenom;
+            public int annee { get; set; }
+            public int nombrePrenom { get; set; }
+            public int ordre { get; set; }
+
+
+            public override string ToString()
+            {
+                return prenom + "   " + annee + "  " + nombrePrenom + " " + ordre;
+            }
+        };
+
         public static int compteMotsFichier()
         {
             try
@@ -52,30 +66,53 @@ namespace Projet_Info
         }
 
 
-        public static string[,] miseEnFormeDonnees(string[] donneesBrutes)
+        public static Prenom[] miseEnFormeDonnees(string[] donneesBrutes)
         {
-            string[,] Donnees = new string[donneesBrutes.Length, 4];
+            Prenom[] Donnees = new Prenom[donneesBrutes.Length];
 
-            for (int i = 0; i < donneesBrutes.Length; i++)
+
+            for (int i = 1; i < donneesBrutes.Length; i++)
             {
                 int indexBase = 0;
                 int index = 0;
                 char enCours;
                 string ligne = donneesBrutes[i];
-                enCours = ligne[index];
+                
 
                 for (int j = 0; j < 4; j++)
                 {
-                    while (enCours != '\t' && enCours != '\n' && enCours != '\r')
+                    enCours = ligne[indexBase];                    
+                    while (enCours != '\t' && index+indexBase < ligne.Length)
                     {
                         Console.Write(enCours);
                         index++;
-                        enCours = ligne[index];
+
+                        if (index + indexBase < ligne.Length)
+                        {
+                            enCours = ligne[indexBase + index];
+                        }
                     }
 
-                    Donnees[i, j] = ligne.Substring(indexBase, index);
+                    switch (j)
+                    {
+                        case 0 :
+                            Donnees[i].annee = int.Parse(ligne.Substring(indexBase, index-1));
+                            break;
+                        case 1 :
+                            Donnees[i].prenom = ligne.Substring(indexBase, index);
+                            break;
+                        case 2 :
+                            Donnees[i].nombrePrenom = int.Parse(ligne.Substring(indexBase, index-1));
+                            break;
+                        case 3 :
+                            Donnees[i].ordre = int.Parse(ligne.Substring(indexBase, index));
+                            break;
+                    }
+
+                    
                     index++;
-                    indexBase = index;                    
+                    indexBase = indexBase + index;
+                    index = 0;
                 }
             }
             return Donnees;
@@ -87,7 +124,7 @@ namespace Projet_Info
         {
             int nbDonnees;
             string[] donneeBrutes;
-            string[,] Donnees;
+            Prenom[] Donnees;
 
 
             nbDonnees = compteMotsFichier();
@@ -98,7 +135,7 @@ namespace Projet_Info
             for (int i = 0; i < 10; i++)
             {
                 for(int j = 0; j<4; j++)
-                    Console.WriteLine(Donnees[i,j]);
+                    Console.WriteLine(Donnees[i].ToString());
             }
 
             Console.ReadLine();
