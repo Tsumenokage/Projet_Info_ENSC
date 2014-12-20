@@ -162,6 +162,47 @@ namespace Projet_Info
             AffichageDonnee(prenomChoisit);
         }
 
+        public static void top10PeriodeDonnees(Prenom[] Donnees)
+        {
+
+            int anneeDebut = 2010;
+            int anneeFin = 2013;
+            int nbCase = 0;
+            int indexPrenom = 0;
+            bool estPresent = false;;
+            Prenom[] PrenomsPeriode = new Prenom[Donnees.Length];
+
+            for (int i = 0; i < Donnees.Length; i++)
+            {
+                if (Donnees[i].annee <= anneeFin && Donnees[i].annee >= anneeDebut)
+                {
+
+                    for (int j = 0; j < nbCase; j++)
+                    {
+                        if (Donnees[i].prenom == PrenomsPeriode[j].prenom)
+                        {
+                            estPresent = true;
+                            indexPrenom = j;
+                        }
+                        else
+                            estPresent = false;
+                    }
+                    if (estPresent)
+                        PrenomsPeriode[i].nombrePrenom += Donnees[i].nombrePrenom;
+                    else
+                    {
+                        PrenomsPeriode[nbCase] = Donnees[i];
+                        nbCase++;
+                    }
+                }
+            }
+
+            for (int i = 0; i < 3; i++)
+            {
+                AffichageDonnee(PrenomsPeriode[i]);
+            }
+
+        }
 
         // \t tabulation
         static void Main(string[] args)
@@ -189,6 +230,7 @@ namespace Projet_Info
                 //Affichage d'un menu pour selectionner l'opération à faire (WIP)
                 Console.WriteLine("Menu : (en cours)");
                 Console.WriteLine("1) Affichage d'un prénom quelqconque sur une année");
+                Console.WriteLine("2) Top 10 des prenoms sur une période donnée");
                 Console.WriteLine("0) Quitter le programme");
                 choixOk = false;
                 while (!choixOk)
@@ -213,6 +255,9 @@ namespace Projet_Info
                         prenomQuelconqueSurUneAnnee(Donnees);
                         break;
 
+                    case 2:
+                        top10PeriodeDonnees(Donnees);
+                        break;
                     case 0:
                         quitte = true;
                         break;
