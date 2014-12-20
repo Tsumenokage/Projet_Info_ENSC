@@ -130,7 +130,7 @@ namespace Projet_Info
             bool anneeOk = false;
 
             alea = rand.Next(1, 100);
-
+            Console.Clear();
             while (!anneeOk)
             {
                 anneeOk = true;
@@ -160,48 +160,146 @@ namespace Projet_Info
             }
 
             AffichageDonnee(prenomChoisit);
+            retourMenu();
         }
 
-        public static void top10PeriodeDonnees(Prenom[] Donnees)
+        public static Prenom[] traitementPrenomSurPeriode(Prenom[] Donnees, int anneeDebut, int anneeFin)
         {
 
-            int anneeDebut = 2010;
-            int anneeFin = 2013;
             int nbCase = 0;
             int indexPrenom = 0;
-            bool estPresent = false;;
-            Prenom[] PrenomsPeriode = new Prenom[Donnees.Length];
+            bool estPresent = false;
+            Prenom[] PrenomsPeriodeTemp = new Prenom[Donnees.Length];
+
+            if (anneeFin < anneeDebut)
+            {
+                Console.WriteLine("Fin de période inférieur de période, échange des bornes");
+                int tmp = anneeFin;
+                anneeFin = anneeDebut;
+                anneeDebut = anneeFin;
+            }
 
             for (int i = 0; i < Donnees.Length; i++)
             {
                 if (Donnees[i].annee <= anneeFin && Donnees[i].annee >= anneeDebut)
                 {
-
-                    for (int j = 0; j < nbCase; j++)
+                    int j = 0;
+                    estPresent = false;
+                    while( j < nbCase && !estPresent)
                     {
-                        if (Donnees[i].prenom == PrenomsPeriode[j].prenom)
+                        if (Donnees[i].prenom == PrenomsPeriodeTemp[j].prenom)
                         {
+
                             estPresent = true;
                             indexPrenom = j;
                         }
                         else
+                        {
                             estPresent = false;
+                        }
+                        j++;
+                        
                     }
+
                     if (estPresent)
-                        PrenomsPeriode[i].nombrePrenom += Donnees[i].nombrePrenom;
+                    {
+                        PrenomsPeriodeTemp[indexPrenom].nombrePrenom += Donnees[i].nombrePrenom;
+
+                    }
                     else
                     {
-                        PrenomsPeriode[nbCase] = Donnees[i];
+                        PrenomsPeriodeTemp[nbCase] = Donnees[i];
                         nbCase++;
                     }
                 }
             }
 
-            for (int i = 0; i < 3; i++)
+            Prenom[] donneeSurPeriode = new Prenom[nbCase];
+
+            for (int i = 0; i < nbCase; i++)
             {
-                AffichageDonnee(PrenomsPeriode[i]);
+                donneeSurPeriode[i] = PrenomsPeriodeTemp[i];
+            }
+            return donneeSurPeriode;
+
+        }
+
+        public static void top10PrenomsPeriode (Prenom[] Donnees)
+        {
+            int anneeDebut = 0;
+            int anneeFin = 0;
+            Prenom[] donneSurPeriode;
+
+            bool anneeDebutOk = false;
+            bool anneeFinOk = false;
+
+            Console.Clear();
+            while(!anneeDebutOk)
+            {
+                anneeDebutOk = true;
+
+                try
+                {
+                    Console.WriteLine("Veuillez entrer le début de la période :");
+                    anneeDebut = int.Parse(Console.ReadLine());
+                }
+                catch
+                {
+                    Console.WriteLine("Annee incorrecte");
+                    anneeDebutOk = false;
+                }
+
             }
 
+            while (!anneeFinOk)
+            {
+                anneeFinOk = true;
+
+                try
+                {
+                    Console.WriteLine("Veuillez entrer la fin de la période :");
+                    anneeFin = int.Parse(Console.ReadLine());
+                }
+                catch
+                {
+                    Console.WriteLine("Annee incorrecte");
+                    anneeFinOk = false;
+                }
+
+            }
+
+            donneSurPeriode = traitementPrenomSurPeriode(Donnees, anneeDebut, anneeFin);
+
+            // Tri du tableau avec algorithme à bulle (compléxité en n² voir par le remplacer pas un quicksort si possible)
+            int i = 1;
+            int n = donneSurPeriode.Length;
+
+            while (i < n)
+            {
+                for (int j = n; j > i; j--)
+                {
+                    if (donneSurPeriode[j - 1].nombrePrenom > donneSurPeriode[j - 2].nombrePrenom)
+                    {
+                        Prenom tmp = donneSurPeriode[j - 1];
+                        donneSurPeriode[j - 1] = donneSurPeriode[j - 2];
+                        donneSurPeriode[j - 2] = tmp;
+                    }
+                }
+                i++;
+            }
+
+
+            for (int j = 0;  j < 10 ;  j++)
+            {
+                Console.WriteLine("{0} : {1} (Nombre de prénom sur la période : {2})", j + 1, donneSurPeriode[j].prenom, donneSurPeriode[j].nombrePrenom);
+            }
+            retourMenu();
+        }
+
+        public static void retourMenu()
+        {
+            Console.WriteLine("Appuyer sur entrée pour retourner au menu");
+            Console.ReadLine();
         }
 
         // \t tabulation
@@ -218,15 +316,16 @@ namespace Projet_Info
             donneeBrutes = new string[nbDonnees];
             remplirTableau(donneeBrutes);
             Donnees = miseEnFormeDonnees(donneeBrutes);
-
+            while (!quitte)
+            {
+            Console.Clear();
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("*************************************************************************************");
             Console.WriteLine("*                    Projet Informatique : étude des prenoms                        *");
             Console.WriteLine("*************************************************************************************");
             Console.ResetColor();
 
-            while (!quitte)
-            {
+
                 //Affichage d'un menu pour selectionner l'opération à faire (WIP)
                 Console.WriteLine("Menu : (en cours)");
                 Console.WriteLine("1) Affichage d'un prénom quelqconque sur une année");
@@ -256,7 +355,7 @@ namespace Projet_Info
                         break;
 
                     case 2:
-                        top10PeriodeDonnees(Donnees);
+                        top10PrenomsPeriode(Donnees);
                         break;
                     case 0:
                         quitte = true;
