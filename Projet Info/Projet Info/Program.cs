@@ -44,7 +44,7 @@ namespace Projet_Info
             return -1;
         }
 
-        public static void RemplirTableau(string[] donneeBrutes)
+        public static void remplirTableau(string[] donneeBrutes)
         {
             System.Text.Encoding encoding = System.Text.Encoding.GetEncoding("utf-8");
             StreamReader monStreamReader = new StreamReader("prenoms_bordeaux.txt", encoding);
@@ -58,7 +58,6 @@ namespace Projet_Info
             // Fermeture du StreamReader (attention très important) 
             monStreamReader.Close(); 
         }
-
 
         public static Prenom[] miseEnFormeDonnees(string[] donneesBrutes)
         {
@@ -111,18 +110,72 @@ namespace Projet_Info
             return Donnees;
         }
 
+        public static void AffichageDonnee (Prenom prenom)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write('\n');
+            Console.WriteLine("Données concernant le prénom {0} durant l'année {1}", prenom.prenom, prenom.annee);
+            Console.WriteLine("Nombre de prénom sur cette année : {0}", prenom.nombrePrenom);
+            Console.WriteLine("Ordre du prénom (sur 100) sur cette année : {0}",prenom.ordre);
+            Console.Write('\n');
+            Console.ResetColor();
+        }
+
+        public static void prenomQuelconqueSurUneAnnee(Prenom[] Donnees)
+        {
+            Random rand = new Random();
+            int alea;
+            Prenom prenomChoisit = new Prenom();
+            int annee = 0;
+            bool anneeOk = false;
+
+            alea = rand.Next(1, 100);
+
+            while (!anneeOk)
+            {
+                anneeOk = true;
+                try
+                {
+                    Console.WriteLine("Veuillez entrer une année : ");
+                    annee = int.Parse(Console.ReadLine());
+                }
+                catch
+                {
+                    Console.WriteLine("Annee incorrecte");
+                    anneeOk = false;
+                }
+            }
+
+            int NbAnneeCorrecte = 0;
+            for (int i = 0; i < Donnees.Length; i++)
+            {
+                if (annee == Donnees[i].annee)
+                {
+                    NbAnneeCorrecte++;
+                    if(NbAnneeCorrecte == alea)
+                    {
+                        prenomChoisit = Donnees[i];
+                    }
+                }
+            }
+
+            AffichageDonnee(prenomChoisit);
+        }
+
 
         // \t tabulation
         static void Main(string[] args)
         {
             int nbDonnees;
+            int choix = 0;
             string[] donneeBrutes;
             Prenom[] Donnees;
-
+            bool choixOk = false;
+            bool quitte = false;
 
             nbDonnees = compteMotsFichier();
             donneeBrutes = new string[nbDonnees];
-            RemplirTableau(donneeBrutes);
+            remplirTableau(donneeBrutes);
             Donnees = miseEnFormeDonnees(donneeBrutes);
 
             Console.ForegroundColor = ConsoleColor.Green;
@@ -131,9 +184,40 @@ namespace Projet_Info
             Console.WriteLine("*************************************************************************************");
             Console.ResetColor();
 
-            //Affichage d'un menu pour selectionner l'opération à faire (WIP)
-            Console.WriteLine("Menu : (en cours)");
-            Console.ReadLine();
+            while (!quitte)
+            {
+                //Affichage d'un menu pour selectionner l'opération à faire (WIP)
+                Console.WriteLine("Menu : (en cours)");
+                Console.WriteLine("1) Affichage d'un prénom quelqconque sur une année");
+                Console.WriteLine("0) Quitter le programme");
+                choixOk = false;
+                while (!choixOk)
+                {
+                    choixOk = true;
+                    try
+                    {
+                        Console.WriteLine("question");
+                        choix = int.Parse(Console.ReadLine());
+
+                    }
+                    catch
+                    {
+                        Console.WriteLine("Valeur incorrecte");
+                        choixOk = false;
+                    }
+                }
+
+                switch (choix)
+                {
+                    case 1:
+                        prenomQuelconqueSurUneAnnee(Donnees);
+                        break;
+
+                    case 0:
+                        quitte = true;
+                        break;
+                }
+            }
         }
     }
 }
