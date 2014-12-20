@@ -125,6 +125,14 @@ namespace Projet_Info
             RemplirTableau(donneeBrutes);
             Donnees = miseEnFormeDonnees(donneeBrutes);
 
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("*************************************************************************************");
+            Console.WriteLine("*                    Projet Informatique : étude des prenoms                        *");
+            Console.WriteLine("*************************************************************************************");
+            Console.ResetColor();
+
+            //Affichage d'un menu pour selectionner l'opération à faire (WIP)
+            Console.WriteLine("Menu : (en cours)");
             Console.ReadLine();
         }
     }
