@@ -185,7 +185,7 @@ namespace Projet_Info
                 }
                 catch
                 {
-                    Console.WriteLine("Annee incorrecte");
+                    Console.WriteLine("Année incorrecte");
                     anneeOk = false;
                 }
             }
@@ -255,7 +255,7 @@ namespace Projet_Info
                 }
                 catch
                 {
-                    Console.WriteLine("Annee incorrecte");
+                    Console.WriteLine("Année incorrecte");
                     anneeFinOk = false;
                 }
 
@@ -267,7 +267,7 @@ namespace Projet_Info
                 Console.WriteLine("Fin de période inférieur de période, échange des bornes");
                 int tmp = anneeFin;
                 anneeFin = anneeDebut;
-                anneeDebut = anneeFin;
+                anneeDebut = tmp;
             }
 
             donneesSurPeriode = traitementDonneesSurPeriode(Donnees, anneeDebut, anneeFin);
@@ -456,7 +456,7 @@ namespace Projet_Info
 
                 try
                 {
-                    Console.WriteLine("Veuillez entrer le nombre d'années sur lesquels vous voulez étudier la tendance :");
+                    Console.WriteLine("Veuillez entrer le nombre d'années sur lesquelles vous voulez étudier la tendance :");
                     nbAnneeEnArriere = int.Parse(Console.ReadLine());
                 }
                 catch
@@ -501,9 +501,6 @@ namespace Projet_Info
             ecartMoyenne = moyenneSecondePeriode - moyennePremierePeriode;
 
             Console.WriteLine("Voyons la tendance du prénom {0} sur les {1} dernières années", prenomSecondePeriode.prenom, nbAnneeEnArriere);
-
-            Console.WriteLine(ecartMoyenne);
-            Console.WriteLine(ecartType);
 
             if(ecartMoyenne <= (-2*ecartType))
                 Console.WriteLine("Ce prénom est à l'abandon depuis les {0}  dernières années", nbAnneeEnArriere);
@@ -589,18 +586,18 @@ namespace Projet_Info
             {
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("*************************************************************************************");
-            Console.WriteLine("*                    Projet Informatique : étude des prenoms                        *");
-            Console.WriteLine("*************************************************************************************");
+            Console.WriteLine("********************************************************************************");
+            Console.WriteLine("*                    Projet Informatique : étude des prénoms                   *");
+            Console.WriteLine("********************************************************************************");
             Console.ResetColor();
 
 
-                //Affichage d'un menu pour selectionner l'opération à faire (WIP)
+                //Affichage d'un menu pour sélectionner l'opération à faire (WIP)
                 Console.WriteLine("Menu : (en cours)");
-                Console.WriteLine("1) Affichage d'un prénom quelqconque sur une année");
-                Console.WriteLine("2) Top 10 des prenoms sur une période donnée");
-                Console.WriteLine("3) Nombre de naissance et rang d'un prenom sur une période donnée");
-                Console.WriteLine("4) Tendance d'un prénom sur les X dernières années");
+                Console.WriteLine("1) Affichage d'un prénom quelconque sur une année");
+                Console.WriteLine("2) Top 10 des prénoms sur une période donnée");
+                Console.WriteLine("3) Nombre de naissance et rang d'un prénom sur une période donnée");
+                Console.WriteLine("4) Tendance d'un prénom au hasard sur les X dernières années");
                 Console.WriteLine("0) Quitter le programme");
                 choixOk = false;
                 while (!choixOk)
@@ -644,5 +641,7 @@ namespace Projet_Info
                 }
             }
         }
+
+
     }
 }
