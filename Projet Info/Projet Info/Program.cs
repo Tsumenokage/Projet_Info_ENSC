@@ -26,6 +26,11 @@ namespace Projet_Info
             public int ordre;
         };
 
+        public struct Texte
+        {
+            public String nomTexte;
+            public String texte;
+        }
 
         /*******************************/
         /*          FONCTIONS          */
@@ -36,12 +41,12 @@ namespace Projet_Info
         /// </summary>
         /// <returns>Un entier indiquant le nombre de lignes comprises dans le fichier 
         /// source</returns>
-        public static int compteMotsFichier()
+        public static int compteMotsFichier(String file)
         {
             try
             {
                 System.Text.Encoding encoding = System.Text.Encoding.GetEncoding("utf-8");
-                StreamReader monStreamReader = new StreamReader("prenoms_bordeaux.txt", encoding);
+                StreamReader monStreamReader = new StreamReader(file, encoding);
                 int nbMots = 0;
                 string mot = monStreamReader.ReadLine();
 
@@ -144,17 +149,40 @@ namespace Projet_Info
             return Donnees;
         }
 
+        public static void recuperationTexteProgramme(String file, Texte[] Donneestexte)
+        {
+            System.Text.Encoding encoding = System.Text.Encoding.GetEncoding("utf-8");
+            StreamReader monStreamReader = new StreamReader(file, encoding);
+            string[] mot;
+
+            for (int i = 0; i < Donneestexte.Length; i++)
+            {
+                mot = monStreamReader.ReadLine().Split('\t');
+                Texte texte = new Texte();
+
+                for (int j = 0; j < 2; j++)
+                {
+                    if (j == 0)
+                        texte.nomTexte = mot[j];
+                    else
+                        texte.texte = mot[j];
+                }
+
+                Donneestexte[i] = texte;
+            }
+        }
+
         /// <summary>
         /// Cette fonction va afficher les données d'un prénom passé en paramètre
         /// </summary>
         /// <param name="affichage">Prénom dont on veut afficher les différentes données</param>
-        public static void AffichageDonnee (Prenom affichage)
+        public static void AffichageDonnee(Prenom affichage, Texte[] texteProgramme)
         {
             Console.ForegroundColor = ConsoleColor.Red;
             Console.Write('\n');
-            Console.WriteLine("Données concernant le prénom {0} durant l'année {1}", affichage.prenom, affichage.annee);
-            Console.WriteLine("Nombre de prénom sur cette année : {0}", affichage.nombrePrenom);
-            Console.WriteLine("Ordre du prénom (sur 100) sur cette année : {0}", affichage.ordre);
+            affichageTexte("NameData",texteProgramme, affichage.prenom.ToString(), affichage.annee.ToString());
+            affichageTexte("NumberData", texteProgramme, affichage.nombrePrenom.ToString());
+            affichageTexte("OrderData",texteProgramme, affichage.ordre.ToString());
             Console.Write('\n');
             Console.ResetColor();
         }
@@ -165,7 +193,7 @@ namespace Projet_Info
         /// l'utilisateur et va ensuite afficher les données de ce prénom
         /// </summary>
         /// <param name="Donnees">L'ensemble des données du fichiers sources</param>
-        public static void prenomQuelconqueSurUneAnnee(Prenom[] Donnees)
+        public static void prenomQuelconqueSurUneAnnee(Prenom[] Donnees, Texte[] texteProgramme)
         {
             Random rand = new Random();
             int alea;
@@ -180,12 +208,12 @@ namespace Projet_Info
                 anneeOk = true;
                 try
                 {
-                    Console.WriteLine("Veuillez entrer une année : ");
+                    affichageTexte("EnterYear", texteProgramme);
                     annee = int.Parse(Console.ReadLine());
                 }
                 catch
                 {
-                    Console.WriteLine("Année incorrecte");
+                    affichageTexte("IncorrectYear", texteProgramme);
                     anneeOk = false;
                 }
             }
@@ -203,8 +231,7 @@ namespace Projet_Info
                 }
             }
 
-            AffichageDonnee(prenomChoisit);
-            retourMenu();
+            AffichageDonnee(prenomChoisit,texteProgramme);
         }
 
         /// <summary>
@@ -360,7 +387,6 @@ namespace Projet_Info
             {
                 Console.WriteLine("{0} : {1} (Nombre de prénom sur la période : {2})", j + 1, donneSurPeriode[j].prenom, donneSurPeriode[j].nombrePrenom);
             }
-            retourMenu();
         }
 
         /// <summary>
@@ -392,6 +418,46 @@ namespace Projet_Info
 
         }
 
+        public static int partitionTriRapide(Prenom[] Donnees, int premier, int dernier, int pivot)
+        {
+            Prenom temp;
+
+            temp = Donnees[dernier];
+            Donnees[dernier] = Donnees[pivot];
+            Donnees[pivot] = temp;
+
+            int j = premier;
+
+            for (int i = premier; i < dernier - 1; i++)
+            {
+                if (String.Compare(Donnees[i].prenom,Donnees[dernier].prenom) < 0)
+                {
+                    temp = Donnees[i];
+                    Donnees[i] = Donnees[j];
+                    Donnees[j] = temp;
+                    j++;
+                }
+            }
+            temp = Donnees[dernier];
+            Donnees[dernier] = Donnees[j];
+            Donnees[j] = temp;
+
+            return j;
+        }
+
+        public static void triRapideSurPrenom(Prenom[] Donnees, int premier, int dernier)
+        {
+            int pivot;
+            if (premier < dernier)
+            {
+                pivot = (premier + dernier) / 2;
+                pivot = partitionTriRapide(Donnees, premier, dernier, pivot);
+                triRapideSurPrenom(Donnees, premier, pivot - 1);
+                triRapideSurPrenom(Donnees, pivot + 1, dernier);
+            }
+
+        }
+
         /// <summary>
         /// Cette fonction va afficher les informations d'un prénoms aléatoire sur l'ensemble 
         /// d'une période
@@ -418,8 +484,6 @@ namespace Projet_Info
 
             Console.WriteLine("Nombre de naissance du prénom {0} sur la période donnée : {1}",prenomChoisi.prenom,prenomChoisi.nombrePrenom);
             Console.WriteLine("Ce nom occupe la {0}ème sur un total de {1}",rangPrenom+1,nbPrenom);
-
-            retourMenu();
 
         }
 
@@ -513,7 +577,6 @@ namespace Projet_Info
             else
                 Console.WriteLine("Ce prénom explose depuis les {0}  dernières années", nbAnneeEnArriere);
 
-            retourMenu();
         }
         
         /// <summary>
@@ -560,12 +623,48 @@ namespace Projet_Info
 
         }
 
+        public static void affichageTexte(String texte, Texte[] texteProgramme, params String[] valeur)
+        {
+            bool trouve = false;
+            int i = 0;
+            while(trouve == false && i < texteProgramme.Length)
+            {
+                if (texte == texteProgramme[i].nomTexte)
+                {
+                    trouve = true;
+                        switch (valeur.Length)
+                        {
+                            case 1:
+                                Console.WriteLine(texteProgramme[i].texte, valeur[0]);
+                                break;
+                            case 2:
+                                Console.WriteLine(texteProgramme[i].texte, valeur[0],valeur[1]);
+                                break;
+                            case 3:
+                                Console.WriteLine(texteProgramme[i].texte, valeur[0], valeur[1],valeur[2]);
+                                break;
+                            case 4:
+                                Console.WriteLine(texteProgramme[i].texte, valeur[0], valeur[1],valeur[2],valeur[3]);
+                                break;
+                            default :
+                                Console.WriteLine(texteProgramme[i].texte);
+                                break;
+
+                        }
+                }
+                i++;
+            }
+
+            if(trouve == false)
+                Console.WriteLine(texte);
+        }
+
         /// <summary>
         /// Fonction qui va permettre le retour au menu lorsque l'un des traitements est terminé
         /// </summary>
-        public static void retourMenu()
+        public static void retourMenu(Texte[] texteProgramme)
         {
-            Console.WriteLine("Appuyer sur entrée pour retourner au menu");
+            affichageTexte("ReturnToMenu", texteProgramme);
             Console.ReadLine();
         }
 
@@ -575,43 +674,54 @@ namespace Projet_Info
             int choix = 0;
             string[] donneeBrutes;
             Prenom[] Donnees;
+            Prenom[] DonneesTrieSurPrenom;
             bool choixOk = false;
             bool quitte = false;
 
-            nbDonnees = compteMotsFichier();
+            string langue = "fr_fr.txt";
+            Texte[] texteProgramme;
+            int nbChamp = compteMotsFichier(langue);
+            texteProgramme = new Texte[nbChamp];
+            recuperationTexteProgramme(langue, texteProgramme);
+
+
+            nbDonnees = compteMotsFichier("prenoms_bordeaux.txt");
             donneeBrutes = new string[nbDonnees];
             remplirTableau(donneeBrutes);
             Donnees = miseEnFormeDonnees(donneeBrutes);
+            DonneesTrieSurPrenom = Donnees;
+            
+
             while (!quitte)
             {
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("********************************************************************************");
-            Console.WriteLine("*                    Projet Informatique : étude des prénoms                   *");
-            Console.WriteLine("********************************************************************************");
+            affichageTexte("TitleLine1", texteProgramme);
+            affichageTexte("TitleLine2", texteProgramme);
+            affichageTexte("TitleLine3", texteProgramme);
             Console.ResetColor();
 
 
                 //Affichage d'un menu pour sélectionner l'opération à faire (WIP)
-                Console.WriteLine("Menu : (en cours)");
-                Console.WriteLine("1) Affichage d'un prénom quelconque sur une année");
-                Console.WriteLine("2) Top 10 des prénoms sur une période donnée");
-                Console.WriteLine("3) Nombre de naissance et rang d'un prénom sur une période donnée");
-                Console.WriteLine("4) Tendance d'un prénom au hasard sur les X dernières années");
-                Console.WriteLine("0) Quitter le programme");
+                affichageTexte("MenuLine1", texteProgramme);
+                affichageTexte("MenuChoice1", texteProgramme);
+                affichageTexte("MenuChoice2", texteProgramme);
+                affichageTexte("MenuChoice3", texteProgramme);
+                affichageTexte("MenuChoice4", texteProgramme);
+                affichageTexte("MenuChoice0", texteProgramme);
                 choixOk = false;
                 while (!choixOk)
                 {
                     choixOk = true;
                     try
                     {
-                        Console.WriteLine("question");
+                        affichageTexte("EnterChoice", texteProgramme);
                         choix = int.Parse(Console.ReadLine());
 
                     }
                     catch
                     {
-                        Console.WriteLine("Valeur incorrecte");
+                        affichageTexte("IncorrectValue", texteProgramme);
                         choixOk = false;
                     }
                 }
@@ -619,7 +729,7 @@ namespace Projet_Info
                 switch (choix)
                 {
                     case 1:
-                        prenomQuelconqueSurUneAnnee(Donnees);
+                        prenomQuelconqueSurUneAnnee(Donnees,texteProgramme);
                         break;
 
                     case 2:
@@ -635,13 +745,18 @@ namespace Projet_Info
                         tendancePrenom(Donnees);
                         break;
 
+                    case 5 :
+                        triRapideSurPrenom(DonneesTrieSurPrenom, 0, DonneesTrieSurPrenom.Length - 1);
+                        break;
+
                     case 0:
                         quitte = true;
                         break;
                 }
+                retourMenu(texteProgramme);
             }
         }
 
-
+        
     }
 }

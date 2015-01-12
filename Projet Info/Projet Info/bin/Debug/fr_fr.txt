@@ -1,0 +1,17 @@
+﻿TitleLine1	********************************************************************************
+TitleLine2	*                    Projet Informatique : étude des prénoms                   *
+TitleLine3	********************************************************************************
+MenuLine1	Menu : (en cours)
+MenuChoice1	1) Affichage d'un prénom quelconque sur une année
+MenuChoice2	2) Top 10 des prénoms sur une période donnée
+MenuChoice3	3) Nombre de naissance et rang d'un prénom sur une période donnée
+MenuChoice4	4) Tendance d'un prénom au hasard sur les X dernières années
+MenuChoice0	0) Quitter le programme
+EnterChoice	Veuillez entrer votre choix
+IncorrectValue	Valeur Incorrecte
+ReturnToMenu	Appuyer sur entrée pour retourner au menu
+EnterYear	Veuillez entrer une année :
+IncorrectYear	Année incorrecte
+NameData	Données concernant le prénom {0} durant l'année {1}
+NumberData	Nombre de prénom sur cette année : {0}
+OrderData	Ordre du prénom (sur 100) sur cette année : {0}		
