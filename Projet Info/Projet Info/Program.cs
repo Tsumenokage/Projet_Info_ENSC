@@ -172,6 +172,26 @@ namespace Projet_Info
             }
         }
 
+        public static bool choixSelection(Texte[] texteProgramme)
+        {
+            bool entreeOk = false;
+            affichageTexte("ChoiceName", texteProgramme);
+
+            string choix = Console.ReadLine();
+
+            while (!entreeOk)
+            {
+                if (choix == "y")
+                    return true;
+                else if (choix == "n")
+                    return false;
+                else
+                    affichageTexte("WrongEntry", texteProgramme);
+            }
+
+            return false;
+        }
+
         /// <summary>
         /// Cette fonction va afficher les données d'un prénom passé en paramètre
         /// </summary>
@@ -372,7 +392,7 @@ namespace Projet_Info
         /// par l'tilisateur
         /// </summary>
         /// <param name="Donnees">L'ensemble des données que l'on souhaite traiter</param>
-        public static void top10PrenomsPeriode (Prenom[] Donnees)
+        public static void top10PrenomsPeriode (Prenom[] Donnees, Texte[] texteProgramme)
         {
             
             Prenom[] donneSurPeriode;
@@ -385,7 +405,8 @@ namespace Projet_Info
 
             for (int j = 0;  j < 10 ;  j++)
             {
-                Console.WriteLine("{0} : {1} (Nombre de prénom sur la période : {2})", j + 1, donneSurPeriode[j].prenom, donneSurPeriode[j].nombrePrenom);
+                int tmp = j + 1;   
+                affichageTexte("Top10Res",texteProgramme,""+tmp, donneSurPeriode[j].prenom, ""+donneSurPeriode[j].nombrePrenom);
             }
         }
 
@@ -425,16 +446,19 @@ namespace Projet_Info
             temp = Donnees[dernier];
             Donnees[dernier] = Donnees[pivot];
             Donnees[pivot] = temp;
+            
 
             int j = premier;
 
-            for (int i = premier; i < dernier - 1; i++)
+            for (int i = premier; i <= dernier - 1; i++)
             {
                 if (String.Compare(Donnees[i].prenom,Donnees[dernier].prenom) < 0)
                 {
                     temp = Donnees[i];
                     Donnees[i] = Donnees[j];
                     Donnees[j] = temp;
+
+
                     j++;
                 }
             }
@@ -442,28 +466,56 @@ namespace Projet_Info
             Donnees[dernier] = Donnees[j];
             Donnees[j] = temp;
 
+
             return j;
         }
+
 
         public static void triRapideSurPrenom(Prenom[] Donnees, int premier, int dernier)
         {
             int pivot;
-            if (premier < dernier)
+            if (premier <= dernier)
             {
-                pivot = (premier + dernier) / 2;
+                pivot = premier;
                 pivot = partitionTriRapide(Donnees, premier, dernier, pivot);
-                triRapideSurPrenom(Donnees, premier, pivot - 1);
+                triRapideSurPrenom(Donnees, premier, pivot-1);
                 triRapideSurPrenom(Donnees, pivot + 1, dernier);
             }
+            
 
         }
+
+        public static void triBulleSurPrenom(Prenom[] Donnees)
+        {
+            // Tri du tableau avec algorithme à bulle (compléxité en n² voir par le remplacer pas un quicksort si possible)
+            int i = 1;
+            int n = Donnees.Length;
+
+            while (i < n)
+            {
+                for (int j = n; j > i; j--)
+                {                    
+                    if(String.Compare(Donnees[j-1].prenom,Donnees[j-2].prenom) < 0)
+                    {
+                        Prenom tmp = Donnees[j - 1];
+                        Donnees[j - 1] = Donnees[j - 2];
+                        Donnees[j - 2] = tmp;
+                        
+                    }
+                }
+                i++;
+            }
+
+
+        }
+
 
         /// <summary>
         /// Cette fonction va afficher les informations d'un prénoms aléatoire sur l'ensemble 
         /// d'une période
         /// </summary>
         /// <param name="Donnees">L'ensemble des données que l'on souhaite traiter</param>
-        public static void nomPeriodeDonnee(Prenom[] Donnees)
+        public static void nomPeriodeDonnee(Prenom[] Donnees, Texte[] texteProgramme)
         {
             Prenom[] prenomSurPeriode;
             Prenom prenomChoisi;
@@ -481,9 +533,9 @@ namespace Projet_Info
 
             prenomChoisi = prenomSurPeriode[rangPrenom];
 
-
-            Console.WriteLine("Nombre de naissance du prénom {0} sur la période donnée : {1}",prenomChoisi.prenom,prenomChoisi.nombrePrenom);
-            Console.WriteLine("Ce nom occupe la {0}ème sur un total de {1}",rangPrenom+1,nbPrenom);
+            affichageTexte("NumPeriode", texteProgramme, prenomChoisi.prenom, "" + prenomChoisi.nombrePrenom);
+            rangPrenom = rangPrenom + 1;
+            affichageTexte("OrderName", texteProgramme, "" + rangPrenom, "" + nbPrenom);
 
         }
 
@@ -492,7 +544,7 @@ namespace Projet_Info
         /// sur les X dernières années entrées par l'utilisateur
         /// </summary>
         /// <param name="Donnees">L'ensemble des données que l'on souhaite traiter</param>
-        public static void tendancePrenom(Prenom[] Donnees)
+        public static void tendancePrenom(Prenom[] Donnees, Texte[] texteProgramme)
         {
             int nbAnneeEnArriere = 0;
             bool nbAnneeEnArriereOk = false;
@@ -520,12 +572,12 @@ namespace Projet_Info
 
                 try
                 {
-                    Console.WriteLine("Veuillez entrer le nombre d'années sur lesquelles vous voulez étudier la tendance :");
+                    affichageTexte("periodeTrend", texteProgramme);
                     nbAnneeEnArriere = int.Parse(Console.ReadLine());
                 }
                 catch
                 {
-                    Console.WriteLine("Erreur année incorrecte");
+                    affichageTexte("IncorrectYear", texteProgramme);
                     nbAnneeEnArriereOk = false;
                 }
 
@@ -564,18 +616,18 @@ namespace Projet_Info
             ecartType = calculEcartType(Donnees, finPremierePeriode, moyennePremierePeriode, prenomPremierePeriode);
             ecartMoyenne = moyenneSecondePeriode - moyennePremierePeriode;
 
-            Console.WriteLine("Voyons la tendance du prénom {0} sur les {1} dernières années", prenomSecondePeriode.prenom, nbAnneeEnArriere);
+            affichageTexte("Trend",texteProgramme, prenomSecondePeriode.prenom, ""+nbAnneeEnArriere);
 
             if(ecartMoyenne <= (-2*ecartType))
-                Console.WriteLine("Ce prénom est à l'abandon depuis les {0}  dernières années", nbAnneeEnArriere);
+                affichageTexte("Abandonement", texteProgramme, "" + nbAnneeEnArriere);
             else if(ecartMoyenne < (-ecartType))
-                Console.WriteLine("Ce prénom est désuet depuis les {0}  dernières années", nbAnneeEnArriere);
+                affichageTexte("Outmoded", texteProgramme, "" + nbAnneeEnArriere);
             else if (ecartMoyenne < (ecartType))
-                Console.WriteLine("Ce prénom se maintient depuis les {0}  dernières années", nbAnneeEnArriere);
+                affichageTexte("Hold", texteProgramme, "" + nbAnneeEnArriere);
             else if (ecartMoyenne < (2*ecartType))
-                Console.WriteLine("Ce prénom est en vogue depuis les {0}  dernières années", nbAnneeEnArriere);
+                affichageTexte("Fashionable", texteProgramme, "" + nbAnneeEnArriere);
             else
-                Console.WriteLine("Ce prénom explose depuis les {0}  dernières années", nbAnneeEnArriere);
+                affichageTexte("Explosed", texteProgramme, "" + nbAnneeEnArriere);
 
         }
         
@@ -733,27 +785,31 @@ namespace Projet_Info
                         break;
 
                     case 2:
-                        top10PrenomsPeriode(Donnees);
+                        top10PrenomsPeriode(Donnees, texteProgramme);
                         break;
 
                     case 3:
-                        nomPeriodeDonnee(Donnees);
+                        nomPeriodeDonnee(Donnees, texteProgramme);
                         break;
 
                     case 4:
-
-                        tendancePrenom(Donnees);
+                        tendancePrenom(Donnees, texteProgramme);
                         break;
 
                     case 5 :
                         triRapideSurPrenom(DonneesTrieSurPrenom, 0, DonneesTrieSurPrenom.Length - 1);
+                        for (int k = 0; k < 500; k++)
+                        {
+                            Console.WriteLine(DonneesTrieSurPrenom[k].prenom);
+                        }
                         break;
 
                     case 0:
                         quitte = true;
                         break;
                 }
-                retourMenu(texteProgramme);
+                if(quitte != true)
+                    retourMenu(texteProgramme);
             }
         }
 

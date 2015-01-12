@@ -1,7 +1,7 @@
 ﻿TitleLine1	********************************************************************************
 TitleLine2	*                    Projet Informatique : étude des prénoms                   *
 TitleLine3	********************************************************************************
-MenuLine1	Menu : (en cours)
+MenuLine1	Menu :
 MenuChoice1	1) Affichage d'un prénom quelconque sur une année
 MenuChoice2	2) Top 10 des prénoms sur une période donnée
 MenuChoice3	3) Nombre de naissance et rang d'un prénom sur une période donnée
@@ -14,4 +14,14 @@ EnterYear	Veuillez entrer une année :
 IncorrectYear	Année incorrecte
 NameData	Données concernant le prénom {0} durant l'année {1}
 NumberData	Nombre de prénom sur cette année : {0}
-OrderData	Ordre du prénom (sur 100) sur cette année : {0}		
+OrderData	Ordre du prénom (sur 100) sur cette année : {0}
+Top10Res	{0} : {1} (Nombre de prénom sur la période : {2})
+NumPeriode	Nombre de naissance du prénom {0} sur la période donnée : {1}
+OrderName	Ce nom occupe la {0}ème sur un total de {1}
+periodeTrend	Veuillez entrer le nombre d'années sur lesquelles vous voulez étudier la tendance :
+Trend	Voyons la tendance du prénom {0} sur les {1} dernières années
+Abandonement	Ce prénom est à l'abandon depuis les {0}  dernières années
+Outmoded	Ce prénom est désuet depuis les {0}  dernières années
+Hold	Ce prénom se maintient depuis les {0}  dernières années
+Fashionable	Ce prénom est en vogue depuis les {0}  dernières années
+Explosed	Ce prénom explose depuis les {0}  dernières années
