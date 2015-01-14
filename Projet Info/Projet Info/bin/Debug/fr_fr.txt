@@ -6,17 +6,16 @@ MenuChoice1	1) Affichage d'un prénom quelconque sur une année
 MenuChoice2	2) Top 10 des prénoms sur une période donnée
 MenuChoice3	3) Nombre de naissance et rang d'un prénom sur une période donnée
 MenuChoice4	4) Tendance d'un prénom au hasard sur les X dernières années
-MenuChoice0	0) Quitter le programme
 EnterChoice	Veuillez entrer votre choix
 IncorrectValue	Valeur Incorrecte
 ReturnToMenu	Appuyer sur entrée pour retourner au menu
 EnterYear	Veuillez entrer une année :
 IncorrectYear	Année incorrecte
 NameData	Données concernant le prénom {0} durant l'année {1}
-NumberData	Nombre de prénom sur cette année : {0}
+NumberData	Ce prénom a été donné {0} fois sur cette année.
 OrderData	Ordre du prénom (sur 100) sur cette année : {0}
 Top10Res	{0} : {1} (Nombre de prénom sur la période : {2})
-NumPeriode	Nombre de naissance du prénom {0} sur la période donnée : {1}
+NumPeriode	Le prénom {0} a été donné {1} fois sur cette période
 OrderName	Ce nom occupe la {0}ème sur un total de {1}
 periodeTrend	Veuillez entrer le nombre d'années sur lesquelles vous voulez étudier la tendance :
 Trend	Voyons la tendance du prénom {0} sur les {1} dernières années
