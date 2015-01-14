@@ -6,6 +6,7 @@ MenuChoice1	1) Affichage d'un prénom quelconque sur une année
 MenuChoice2	2) Top 10 des prénoms sur une période donnée
 MenuChoice3	3) Nombre de naissance et rang d'un prénom sur une période donnée
 MenuChoice4	4) Tendance d'un prénom au hasard sur les X dernières années
+MenuChoice0	0) Quitter le programme
 EnterChoice	Veuillez entrer votre choix
 IncorrectValue	Valeur Incorrecte
 ReturnToMenu	Appuyer sur entrée pour retourner au menu
@@ -24,3 +25,5 @@ Outmoded	Ce prénom est désuet depuis les {0}  dernières années
 Hold	Ce prénom se maintient depuis les {0}  dernières années
 Fashionable	Ce prénom est en vogue depuis les {0}  dernières années
 Explosed	Ce prénom explose depuis les {0}  dernières années
+ChoiceName	Voulez-vous choisir les prénoms à étudier ? Entrez y pour pouvoir les choisir, et n si vous souhaitez qu'ils soient choisis aléatoirement.
+WrongEntry	Valeur incorrecte. Entrez y pour pouvoir les choisir, et n si vous souhaitez qu'ils soient choisis aléatoirement.
