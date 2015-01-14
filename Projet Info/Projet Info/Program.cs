@@ -175,18 +175,30 @@ namespace Projet_Info
         public static bool choixSelection(Texte[] texteProgramme)
         {
             bool entreeOk = false;
-            affichageTexte("ChoiceName", texteProgramme);
 
-            string choix = Console.ReadLine();
 
             while (!entreeOk)
             {
-                if (choix == "y")
-                    return true;
-                else if (choix == "n")
-                    return false;
-                else
+                entreeOk = true;
+                try
+                {
+                    affichageTexte("ChoiceName", texteProgramme);
+                    string choix = Console.ReadLine();
+                    if (choix == "y")
+                        return true;
+                    else if (choix == "n")
+                        return false;
+                    else
+                    {
+                        affichageTexte("WrongEntry", texteProgramme);
+                        entreeOk = false;
+                    }
+                }
+                catch
+                {
                     affichageTexte("WrongEntry", texteProgramme);
+                    entreeOk = false;
+                }
             }
 
             return false;
@@ -207,6 +219,37 @@ namespace Projet_Info
             Console.ResetColor();
         }
 
+        public static int demandeChoixPrenom(Prenom[] Donnees, Texte[] texteProgramme)
+        {
+            bool prenomOk = false;
+            string prenom = "null";
+            int indice = 0;
+
+            triRapideSurPrenom(Donnees, 0, Donnees.Length - 1);
+            while (!prenomOk || indice == -1)
+            {
+                prenomOk = true;
+                try
+                {
+                    affichageTexte("EnterFirstName", texteProgramme);
+                    prenom = Console.ReadLine();
+                    prenom = prenom.ToUpper();
+                }
+                catch
+                {
+                    affichageTexte("WrongEntry", texteProgramme);
+                    prenomOk = false;
+                }
+
+                indice = rechercheDichotomiquePrenom(Donnees, prenom);
+                if (indice == -1)
+                    affichageTexte("NotFound", texteProgramme);
+            }
+
+            return indice;
+
+
+        }
 
         /// <summary>
         /// Cette fonction va sélectionner un prénom aléatoire sur une année entrée par 
@@ -216,12 +259,14 @@ namespace Projet_Info
         public static void prenomQuelconqueSurUneAnnee(Prenom[] Donnees, Texte[] texteProgramme)
         {
             Random rand = new Random();
-            int alea;
+            int indice;
             Prenom prenomChoisit = new Prenom();
             int annee = 0;
             bool anneeOk = false;
+            Prenom[] anneeEtudiee;
+            bool choixPrenom;
 
-            alea = rand.Next(1, 100);
+            
             Console.Clear();
             while (!anneeOk)
             {
@@ -238,19 +283,19 @@ namespace Projet_Info
                 }
             }
 
-            int NbAnneeCorrecte = 0;
-            for (int i = 0; i < Donnees.Length; i++)
-            {
-                if (annee == Donnees[i].annee)
-                {
-                    NbAnneeCorrecte++;
-                    if(NbAnneeCorrecte == alea)
-                    {
-                        prenomChoisit = Donnees[i];
-                    }
-                }
-            }
+            choixPrenom = choixSelection(texteProgramme);
 
+            anneeEtudiee = traitementDonneesSurPeriode(Donnees, annee, annee);
+
+            if (choixPrenom)
+            {
+                indice = demandeChoixPrenom(anneeEtudiee, texteProgramme);              
+            }
+            else
+            {
+                indice = rand.Next(0, 99);
+            }
+            prenomChoisit = anneeEtudiee[indice];
             AffichageDonnee(prenomChoisit,texteProgramme);
         }
 
@@ -484,9 +529,31 @@ namespace Projet_Info
 
         }
 
-        public static void rechercheDichotomiquePrenom(Prenom[] Donnees, string prenom)
+        public static int rechercheDichotomiquePrenom(Prenom[] Donnees, string prenom)
         {
+            int debut = 0;
+            int fin = Donnees.Length - 1;
+            bool trouve = false;
+            int indice;
+            int i = -1;
 
+            while (debut <= fin && !trouve)
+            {
+                i = (debut + fin) / 2;
+
+                if (Donnees[i].prenom == prenom)
+                    trouve = true;
+                else if (string.Compare(Donnees[i].prenom, prenom) > 0)
+                    fin = i - 1;
+                else
+                    debut = i + 1;
+            }
+            if (trouve)
+                indice = i;
+            else
+                indice = -1;
+
+            return indice;
         }
 
         /// <summary>
