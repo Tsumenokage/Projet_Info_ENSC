@@ -8,3 +8,5 @@ C:\Users\jalbouys.ENSC.000\Desktop\Projet Infowc\trunk\Projet Info\Projet Info\o
 C:\Users\jalbouys.ENSC.000\Desktop\Projet Infowc\trunk\Projet Info\Projet Info\bin\Debug\Projet Info.exe
 C:\Users\jalbouys.ENSC.000\Desktop\Projet Infowc\trunk\Projet Info\Projet Info\bin\Debug\Projet Info.pdb
 C:\Users\jalbouys.ENSC.000\Desktop\Projet Infowc\trunk\Projet Info\Projet Info\obj\x86\Debug\Projet Info.csprojResolveAssemblyReference.cache
+C:\Users\Tsume\Desktop\Projet_Info_ENSC\Projet Info\Projet Info\obj\x86\Debug\Projet Info.exe
+C:\Users\Tsume\Desktop\Projet_Info_ENSC\Projet Info\Projet Info\obj\x86\Debug\Projet Info.pdb

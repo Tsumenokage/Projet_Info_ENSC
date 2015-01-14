@@ -435,12 +435,9 @@ namespace Projet_Info
         public static int partitionTriRapide(Prenom[] Donnees, int premier, int dernier, int pivot)
         {
             Prenom temp;
-
             temp = Donnees[dernier];
             Donnees[dernier] = Donnees[pivot];
             Donnees[pivot] = temp;
-
-
             int j = premier;
 
             for (int i = premier; i <= dernier - 1; i++)
@@ -450,15 +447,12 @@ namespace Projet_Info
                     temp = Donnees[i];
                     Donnees[i] = Donnees[j];
                     Donnees[j] = temp;
-
-
                     j++;
                 }
             }
             temp = Donnees[dernier];
             Donnees[dernier] = Donnees[j];
             Donnees[j] = temp;
-
 
             return j;
         }
@@ -483,8 +477,6 @@ namespace Projet_Info
                 triRapideSurPrenom(Donnees, premier, pivot - 1);
                 triRapideSurPrenom(Donnees, pivot + 1, dernier);
             }
-
-
         }
 
         /// <summary>
