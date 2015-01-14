@@ -1,24 +1,28 @@
 TitleLine1	********************************************************************************
-TitleLine2	*                    Computing Project : First Name study                    *
+TitleLine2	*                    Computing Project : First Name study                      *
 TitleLine3	********************************************************************************
 MenuLine1	Menu 
 MenuChoice1	1) Display of a given first name on a year.
 MenuChoice2	2) Ten most common first names over a given period
 MenuChoice3	3) Total and rank of a first name over a given period
-MenuChoice4	4) Trend of a first name over a given period
+MenuChoice4	4) Trend of a chosen first name over a given period
+MenuChoice5	5) Change language
 MenuChoice0	0) Exit
 EnterChoice	Please write your choice
 IncorrectValue	Incorrect value
 ReturnToMenu	Press enter to go back to the main menu
 EnterYear	Please write a year
+EnterFirstYear	Please write the first year of the period
+EnterLastYear	Please write the last year of the period
 IncorrectYear	Incorrect year
+ReverseYear	The end of the period is inferior to its beginning. The limits have been reversed.
 EnterFirstName	Please write the first name to study
 WrongEntry	Incorrect value
 NotFound	There is no data for this first name during this year / period
 NameData	Data about the first name {0} during {1}
 NumberData	{0} children got this first name during this year.
 OrderData	Rank of the first name (out of 100) during this year : {0}
-Top10Res	{0} : {1} (Total of first names over this period : {2})
+Top10Res	{0} : {1} (Total of this first name over the period : {2})
 NumPeriode	The first name {0} is the name of {1} children born over this period.
 OrderName	This first name is the {0}th out of {1}
 periodeTrend	Please write the length (in year) of the period you will study the trend.
@@ -28,4 +32,4 @@ Outmoded	This first name has dropped since the last {0} years.
 Hold	This first name is stable since the last {0} years.
 Fashionable	This first name's popularity is increasing since the last {0} years.
 Explosed	This first name is off the charts since the last {0} years.
-ChoiceName	Do you wish to choose the first name ? Press y to be able to choose the first names, or n to choose them randomly.
+ChoiceName	Do you wish to choose the first name ? Press y to be able to choose the name or n to choose it randomly.

@@ -9,7 +9,7 @@ namespace Projet_Info
 {
     class Program
     {
-        
+
         /*************************************/
         /******        STRUCTURES            */
         /*************************************/
@@ -51,7 +51,7 @@ namespace Projet_Info
             bool choixOk = false;
             bool quitte = false;
 
-            string langue = "fr_fr.txt";
+            string langue = choixLangue();
             Texte[] texteProgramme;
             int nbChamp = compteMotsFichier(langue);
             texteProgramme = new Texte[nbChamp];
@@ -81,6 +81,7 @@ namespace Projet_Info
                 affichageTexte("MenuChoice2", texteProgramme);
                 affichageTexte("MenuChoice3", texteProgramme);
                 affichageTexte("MenuChoice4", texteProgramme);
+                affichageTexte("MenuChoice5", texteProgramme);
                 affichageTexte("MenuChoice0", texteProgramme);
                 choixOk = false;
                 while (!choixOk)
@@ -118,6 +119,11 @@ namespace Projet_Info
                         break;
 
                     case 5:
+                        langue = choixLangue();
+                        recuperationTexteProgramme(langue, texteProgramme);
+                        break;
+
+                    case 6:
                         triRapideSurPrenom(DonneesTrieSurPrenom, 0, DonneesTrieSurPrenom.Length - 1);
                         for (int k = 0; k < 500; k++)
                         {
@@ -138,6 +144,31 @@ namespace Projet_Info
         /***************************/
         /*  FONCTIONS D'AFFICHAGE  */
         /***************************/
+        /// <summary>
+        /// Fonction du choix de la langue.
+        /// </summary>
+        /// <returns></returns>
+        static string choixLangue()
+        {
+            char choix = 'a';
+            string langue = "aaa";
+            while (choix != 'f' && choix != 'e')
+            {
+                Console.WriteLine("Choisissez votre langue : f pour Français, e pour Anglais \nPlease choose your language : e for English, f for French");
+                choix = char.Parse(Console.ReadLine());
+
+                if (choix == 'f')
+                    langue = "fr_fr.txt";
+                else if (choix == 'e')
+                    langue = "fr_en.txt";
+                else
+                {
+                    Console.WriteLine("Valeur incorrecte");
+                }
+            }
+
+            return langue;
+        }
 
         /// <summary>
         /// Cette fonction va récupérer les données contenue dans un fichier passé en paramètre
@@ -260,7 +291,7 @@ namespace Projet_Info
 
                 while (mot != null)
                 {
-                    
+
                     mot = monStreamReader.ReadLine();
                     nbMots++;
                 }
@@ -275,7 +306,7 @@ namespace Projet_Info
             }
             return -1;
         }
-        
+
         /// <summary>
         /// Cette fonction va effectuer le stockage de chaque ligne du fichier source 
         /// dans un tableau de chaînes de caractères
@@ -294,7 +325,7 @@ namespace Projet_Info
                 donneeBrutes[i] = mot;
             }
             // Fermeture du StreamReader (attention très important) 
-            monStreamReader.Close(); 
+            monStreamReader.Close();
         }
 
         /// <summary>
@@ -316,12 +347,12 @@ namespace Projet_Info
                 int index = 0;
                 char enCours;
                 string ligne = donneesBrutes[i];
-                
+
                 //1914  Jean    25  50
                 for (int j = 0; j < 4; j++)
                 {
-                    enCours = ligne[indexBase];                    
-                    while (enCours != '\t' && index+indexBase < ligne.Length)
+                    enCours = ligne[indexBase];
+                    while (enCours != '\t' && index + indexBase < ligne.Length)
                     {
                         index++;
 
@@ -330,25 +361,25 @@ namespace Projet_Info
                             enCours = ligne[indexBase + index];
                         }
                     }
-                    
+
                     switch (j)
                     {
-                        case 0 :
-                            Donnees[i-1].annee = int.Parse(ligne.Substring(indexBase, index));
+                        case 0:
+                            Donnees[i - 1].annee = int.Parse(ligne.Substring(indexBase, index));
                             break;
-                        case 1 :
-                            Donnees[i-1].prenom = ligne.Substring(indexBase, index);
+                        case 1:
+                            Donnees[i - 1].prenom = ligne.Substring(indexBase, index);
                             break;
-                        case 2 :
-                            Donnees[i-1].nombrePrenom = int.Parse(ligne.Substring(indexBase, index));
+                        case 2:
+                            Donnees[i - 1].nombrePrenom = int.Parse(ligne.Substring(indexBase, index));
                             break;
-                        case 3 :
-                            Donnees[i-1].ordre = int.Parse(ligne.Substring(indexBase, index));
+                        case 3:
+                            Donnees[i - 1].ordre = int.Parse(ligne.Substring(indexBase, index));
                             break;
 
                     }
 
-                    
+
                     index++;
                     indexBase = indexBase + index;
                     index = 0;
@@ -642,7 +673,7 @@ namespace Projet_Info
             Prenom[] donneSurPeriode;
 
 
-            donneSurPeriode = demandePeriode(Donnees);
+            donneSurPeriode = demandePeriode(Donnees, texteProgramme);
 
             donneSurPeriode = triSurNbNaissance(donneSurPeriode);
 
@@ -662,12 +693,12 @@ namespace Projet_Info
         /// <param name="Donnees">L'ensemble des données du fichiers sources</param>
         /// <returns>Tableau de Prenom contenant les prénoms sur la période de 
         /// l'utilisateur</returns>
-        public static Prenom[] demandePeriode(Prenom[] Donnees)
+        public static Prenom[] demandePeriode(Prenom[] Donnees, Texte[] texteProgramme)
         {
 
 
             Prenom[] PrenomsPeriodeTemp = new Prenom[Donnees.Length];
-            Prenom[] donneesSurPeriode;
+            Prenom[] periodeEtudiee;
             int anneeDebut = 0;
             int anneeFin = 0;
             bool anneeDebutOk = false;
@@ -680,12 +711,12 @@ namespace Projet_Info
 
                 try
                 {
-                    Console.WriteLine("Veuillez entrer le début de la période :");
+                    affichageTexte("EnterFirstYear", texteProgramme);
                     anneeDebut = int.Parse(Console.ReadLine());
                 }
                 catch
                 {
-                    Console.WriteLine("Annee incorrecte");
+                    affichageTexte("IncorrectYear", texteProgramme);
                     anneeDebutOk = false;
                 }
 
@@ -697,12 +728,12 @@ namespace Projet_Info
 
                 try
                 {
-                    Console.WriteLine("Veuillez entrer la fin de la période :");
+                    affichageTexte("EnterLastYear", texteProgramme);
                     anneeFin = int.Parse(Console.ReadLine());
                 }
                 catch
                 {
-                    Console.WriteLine("Année incorrecte");
+                    affichageTexte("IncorrectYear", texteProgramme);
                     anneeFinOk = false;
                 }
 
@@ -711,15 +742,15 @@ namespace Projet_Info
 
             if (anneeFin < anneeDebut)
             {
-                Console.WriteLine("Fin de période inférieur de période, échange des bornes");
+                affichageTexte("ReverseYear", texteProgramme);
                 int tmp = anneeFin;
                 anneeFin = anneeDebut;
                 anneeDebut = tmp;
             }
 
-            donneesSurPeriode = traitementDonneesSurPeriode(Donnees, anneeDebut, anneeFin);
+            periodeEtudiee = traitementDonneesSurPeriode(Donnees, anneeDebut, anneeFin);
 
-            return donneesSurPeriode;
+            return periodeEtudiee;
 
         }
 
@@ -809,7 +840,7 @@ namespace Projet_Info
             bool choixPrenom;
 
 
-            prenomSurPeriode = demandePeriode(Donnees);
+            prenomSurPeriode = demandePeriode(Donnees, texteProgramme);
             choixPrenom = choixSelection(texteProgramme);
             nbPrenom = prenomSurPeriode.Length;
 
@@ -1029,7 +1060,7 @@ namespace Projet_Info
                 retour.prenom = prenom;
                 return retour;
             }
-        }        
+        }
 
     }
 }

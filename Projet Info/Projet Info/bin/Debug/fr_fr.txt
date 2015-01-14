@@ -5,13 +5,17 @@ MenuLine1	Menu :
 MenuChoice1	1) Affichage d'un prénom quelconque sur une année
 MenuChoice2	2) Top 10 des prénoms sur une période donnée
 MenuChoice3	3) Nombre de naissance et rang d'un prénom sur une période donnée
-MenuChoice4	4) Tendance d'un prénom au hasard sur les X dernières années
+MenuChoice4	4) Tendance d'un prénom au choix sur les X dernières années
+MenuChoice5	5) Changer la langue
 MenuChoice0	0) Quitter le programme
 EnterChoice	Veuillez entrer votre choix
 IncorrectValue	Valeur Incorrecte
 ReturnToMenu	Appuyer sur entrée pour retourner au menu
 EnterYear	Veuillez entrer une année :
+EnterFirstYear	Veuillez entrer le début de la période
+EnterLastYear	Veuillez entrer la fin de la période
 IncorrectYear	Année incorrecte
+ReverseYear	Fin de période inférieure au début de la période, échange des bornes
 EnterFirstName	Veuillez entrer le prénom à étudier.
 WrongEntry	Valeur incorrecte.
 NotFound	Ce prénom est introuvable pour cette année / période.
