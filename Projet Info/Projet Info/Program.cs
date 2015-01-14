@@ -470,7 +470,6 @@ namespace Projet_Info
             return j;
         }
 
-
         public static void triRapideSurPrenom(Prenom[] Donnees, int premier, int dernier)
         {
             int pivot;
@@ -485,30 +484,10 @@ namespace Projet_Info
 
         }
 
-        public static void triBulleSurPrenom(Prenom[] Donnees)
+        public static void rechercheDichotomiquePrenom(Prenom[] Donnees, string prenom)
         {
-            // Tri du tableau avec algorithme à bulle (compléxité en n² voir par le remplacer pas un quicksort si possible)
-            int i = 1;
-            int n = Donnees.Length;
-
-            while (i < n)
-            {
-                for (int j = n; j > i; j--)
-                {                    
-                    if(String.Compare(Donnees[j-1].prenom,Donnees[j-2].prenom) < 0)
-                    {
-                        Prenom tmp = Donnees[j - 1];
-                        Donnees[j - 1] = Donnees[j - 2];
-                        Donnees[j - 2] = tmp;
-                        
-                    }
-                }
-                i++;
-            }
-
 
         }
-
 
         /// <summary>
         /// Cette fonction va afficher les informations d'un prénoms aléatoire sur l'ensemble 
