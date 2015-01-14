@@ -23,7 +23,7 @@ NameData	Data about the first name {0} during {1}
 NumberData	{0} children got this first name during this year.
 OrderData	Rank of the first name (out of 100) during this year : {0}
 Top10Res	{0} : {1} (Total of this first name over the period : {2})
-NumPeriode	The first name {0} is the name of {1} children born over this period.
+NumPeriode	The first name {0} is the name of {1} children born over this period
 OrderName	This first name is the {0}th out of {1}
 periodeTrend	Please write the length (in year) of the period you will study the trend.
 Trend	Let's see the trend of the first name {0} on the last {1} years.

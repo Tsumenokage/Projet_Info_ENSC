@@ -867,9 +867,11 @@ namespace Projet_Info
                 i++;
             }
 
+            Console.ForegroundColor = ConsoleColor.Red;
             affichageTexte("NumPeriode", texteProgramme, prenomChoisi.prenom, "" + prenomChoisi.nombrePrenom);
             rangPrenom = rangPrenom + 1;
             affichageTexte("OrderName", texteProgramme, "" + rangPrenom, "" + nbPrenom);
+            Console.ResetColor();
 
         }
 
@@ -955,6 +957,7 @@ namespace Projet_Info
             ecartType = calculEcartType(Donnees, finPremierePeriode, moyennePremierePeriode, prenomPremierePeriode);
             ecartMoyenne = moyenneSecondePeriode - moyennePremierePeriode;
 
+            Console.ForegroundColor = ConsoleColor.Red;
             affichageTexte("Trend", texteProgramme, prenomSecondePeriode.prenom, "" + nbAnneeEnArriere);
 
             if (ecartMoyenne <= (-2 * ecartType))
@@ -967,7 +970,7 @@ namespace Projet_Info
                 affichageTexte("Fashionable", texteProgramme, "" + nbAnneeEnArriere);
             else
                 affichageTexte("Explosed", texteProgramme, "" + nbAnneeEnArriere);
-
+            Console.ResetColor();
         }
 
         /// <summary>
