@@ -12,6 +12,7 @@ IncorrectValue	Valeur Incorrecte
 ReturnToMenu	Appuyer sur entrée pour retourner au menu
 EnterYear	Veuillez entrer une année :
 IncorrectYear	Année incorrecte
+EnterFirstName	Veuillez entrer le prénom à étudier.
 NameData	Données concernant le prénom {0} durant l'année {1}
 NumberData	Ce prénom a été donné {0} fois sur cette année.
 OrderData	Ordre du prénom (sur 100) sur cette année : {0}
@@ -26,4 +27,4 @@ Hold	Ce prénom se maintient depuis les {0}  dernières années
 Fashionable	Ce prénom est en vogue depuis les {0}  dernières années
 Explosed	Ce prénom explose depuis les {0}  dernières années
 ChoiceName	Voulez-vous choisir les prénoms à étudier ? Entrez y pour pouvoir les choisir, et n si vous souhaitez qu'ils soient choisis aléatoirement.
-WrongEntry	Valeur incorrecte. Entrez y pour pouvoir les choisir, et n si vous souhaitez qu'ils soient choisis aléatoirement.
+WrongEntry	Valeur incorrecte.
