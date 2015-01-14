@@ -13,6 +13,8 @@ ReturnToMenu	Press enter to go back to the main menu
 EnterYear	Please write a year
 IncorrectYear	Incorrect year
 EnterFirstName	Please write the first name to study
+WrongEntry	Incorrect value
+NotFound	There is no data for this first name during this year / period
 NameData	Data about the first name {0} during {1}
 NumberData	{0} children got this first name during this year.
 OrderData	Rank of the first name (out of 100) during this year : {0}
@@ -27,4 +29,3 @@ Hold	This first name is stable since the last {0} years.
 Fashionable	This first name's popularity is increasing since the last {0} years.
 Explosed	This first name is off the charts since the last {0} years.
 ChoiceName	Do you wish to choose the first name ? Press y to be able to choose the first names, or n to choose them randomly.
-WrongEntry	Incorrect value.
