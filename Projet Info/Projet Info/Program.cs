@@ -64,7 +64,7 @@ namespace Projet_Info
             Donnees = miseEnFormeDonnees(donneeBrutes);
             DonneesTrieSurPrenom = Donnees;
 
-
+            //Boucle qui va permettre d'afficher le menu
             while (!quitte)
             {
                 Console.Clear();
@@ -182,6 +182,7 @@ namespace Projet_Info
             StreamReader monStreamReader = new StreamReader(file, encoding);
             string[] mot;
 
+            //Boucle qui va récupérer et stockés les textes à afficher
             for (int i = 0; i < Donneestexte.Length; i++)
             {
                 mot = monStreamReader.ReadLine().Split('\t');
@@ -213,11 +214,11 @@ namespace Projet_Info
             bool trouve = false;
             int i = 0;
             while (trouve == false && i < texteProgramme.Length)
-            {
+            {   //Si l'identifiant existe on affiche le texte correspondant
                 if (texte == texteProgramme[i].nomTexte)
                 {
                     trouve = true;
-                    switch (valeur.Length)
+                    switch (valeur.Length)//On fait un switch en fonction du nombre de paramètres
                     {
                         case 1:
                             Console.WriteLine(texteProgramme[i].texte, valeur[0]);
@@ -226,10 +227,12 @@ namespace Projet_Info
                             Console.WriteLine(texteProgramme[i].texte, valeur[0], valeur[1]);
                             break;
                         case 3:
-                            Console.WriteLine(texteProgramme[i].texte, valeur[0], valeur[1], valeur[2]);
+                            Console.WriteLine(texteProgramme[i].texte, valeur[0], valeur[1], 
+                                valeur[2]);
                             break;
                         case 4:
-                            Console.WriteLine(texteProgramme[i].texte, valeur[0], valeur[1], valeur[2], valeur[3]);
+                            Console.WriteLine(texteProgramme[i].texte, valeur[0], valeur[1], 
+                                valeur[2], valeur[3]);
                             break;
                         default:
                             Console.WriteLine(texteProgramme[i].texte);
@@ -239,7 +242,7 @@ namespace Projet_Info
                 }
                 i++;
             }
-
+            //Si l'identifiant n'existe pas on écrit ce dernier à l'écran
             if (trouve == false)
                 Console.WriteLine(texte);
         }
@@ -282,13 +285,13 @@ namespace Projet_Info
         /// source</returns>
         public static int compteMotsFichier(String file)
         {
-            try
+            try//On essaie d'ouvrir le fichier
             {
                 System.Text.Encoding encoding = System.Text.Encoding.GetEncoding("utf-8");
                 StreamReader monStreamReader = new StreamReader(file, encoding);
                 int nbMots = 0;
                 string mot = monStreamReader.ReadLine();
-
+                //Boucle qui va compter le nombre de ligne du fichier texte
                 while (mot != null)
                 {
 
@@ -298,7 +301,7 @@ namespace Projet_Info
                 monStreamReader.Close();
                 return nbMots;
             }
-            catch (Exception ex)
+            catch (Exception ex)//Exception levé si l'ouverture à un problème
             {
                 // Code exécuté en cas d'exception 
                 Console.Write("Une erreur est survenue au cours de la lecture :");
@@ -348,7 +351,8 @@ namespace Projet_Info
                 char enCours;
                 string ligne = donneesBrutes[i];
 
-                //1914  Jean    25  50
+                //Boucle qui va décompser chaque ligne en fonction des tabulations
+                //et qui va ensuite stockés les informations de chaque ligne dans une structure
                 for (int j = 0; j < 4; j++)
                 {
                     enCours = ligne[indexBase];
@@ -393,7 +397,7 @@ namespace Projet_Info
         /***********************************************/
 
         /// <summary>
-        /// Cette fonction va trier un tableau de prénom en fonction du nombre de naissance
+        /// Cette fonction va trier de façon décroissante un tableau de prénom en fonction du nombre de naissance
         /// </summary>
         /// <param name="Donnees">L'ensemble des données que l'on souhaite traiter</param>
         /// <returns>Le tableau passé en paramètre mais trié selon les naissances</returns>
@@ -435,13 +439,13 @@ namespace Projet_Info
         public static int partitionTriRapide(Prenom[] Donnees, int premier, int dernier, int pivot)
         {
             Prenom temp;
-            temp = Donnees[dernier];
+            temp = Donnees[dernier];//On inverse le dernier élement et le pivot
             Donnees[dernier] = Donnees[pivot];
             Donnees[pivot] = temp;
             int j = premier;
 
             for (int i = premier; i <= dernier - 1; i++)
-            {
+            {   //Si la valeur en i est inférieur à la valeur en pivot, on échange les deux
                 if (String.Compare(Donnees[i].prenom, Donnees[dernier].prenom) < 0)
                 {
                     temp = Donnees[i];
@@ -449,7 +453,7 @@ namespace Projet_Info
                     Donnees[j] = temp;
                     j++;
                 }
-            }
+            }//On échange la valeur en dernier et la valeur en j
             temp = Donnees[dernier];
             Donnees[dernier] = Donnees[j];
             Donnees[j] = temp;
@@ -470,10 +474,12 @@ namespace Projet_Info
         public static void triRapideSurPrenom(Prenom[] Donnees, int premier, int dernier)
         {
             int pivot;
-            if (premier <= dernier)
+            if (premier <= dernier)//Condition de sortie de la récursivité
             {
-                pivot = premier;
+                pivot = premier;//Sélection du pivot (arbitraire)
+                //On partitionne le tableau
                 pivot = partitionTriRapide(Donnees, premier, dernier, pivot);
+                //On rapelle triRapideSurPrenom sur chacun des sous tableau
                 triRapideSurPrenom(Donnees, premier, pivot - 1);
                 triRapideSurPrenom(Donnees, pivot + 1, dernier);
             }
@@ -494,7 +500,7 @@ namespace Projet_Info
             bool trouve = false;
             int indice;
             int i = -1;
-
+            // Boucle de recherche
             while (debut <= fin && !trouve)
             {
                 i = (debut + fin) / 2;
@@ -535,7 +541,7 @@ namespace Projet_Info
             Prenom[] anneeEtudiee;
             bool choixPrenom;
 
-
+            //Demande d'information à l'utilisateur
             Console.Clear();
             while (!anneeOk)
             {
@@ -550,12 +556,18 @@ namespace Projet_Info
                     affichageTexte("IncorrectYear", texteProgramme);
                     anneeOk = false;
                 }
+
+                if (annee < 1900 || annee > 2013)
+                {
+                    affichageTexte("IncorrectYear", texteProgramme);
+                    anneeOk = false;
+                }
             }
-
+            
             choixPrenom = choixSelection(texteProgramme);
-
+            
+            //Recherche des données dans le tableau
             anneeEtudiee = traitementDonneesSurPeriode(Donnees, annee, annee);
-
             if (choixPrenom)
             {
                 indice = demandeChoixPrenom(anneeEtudiee, texteProgramme);
@@ -565,6 +577,7 @@ namespace Projet_Info
                 indice = rand.Next(0, 99);
             }
             prenomChoisit = anneeEtudiee[indice];
+            //affichage des résultats
             affichageDonnee(prenomChoisit, texteProgramme);
         }
 
@@ -578,7 +591,7 @@ namespace Projet_Info
         {
             bool entreeOk = false;
 
-
+            //Question si l'utilisateur désire entrer un prénom ou non
             while (!entreeOk)
             {
                 entreeOk = true;
@@ -621,8 +634,10 @@ namespace Projet_Info
             bool prenomOk = false;
             string prenom = "null";
             int indice = 0;
-
+            //Tri les prénoms par ordre alphabétique 
             triRapideSurPrenom(Donnees, 0, Donnees.Length - 1);
+            //Demande à l'utilisateur de rentrer un prénom et boucle si le prénom est
+            //incorrecte ou si il n'existe pas
             while (!prenomOk || indice == -1)
             {
                 prenomOk = true;
@@ -637,12 +652,12 @@ namespace Projet_Info
                     affichageTexte("WrongEntry", texteProgramme);
                     prenomOk = false;
                 }
-
+                
                 indice = rechercheDichotomiquePrenom(Donnees, prenom);
                 if (indice == -1)
                     affichageTexte("NotFound", texteProgramme);
             }
-
+            //On retourne l'indice du tableau dans lequels esr contenue le prénom
             return indice;
 
 
@@ -664,12 +679,13 @@ namespace Projet_Info
 
             Prenom[] donneSurPeriode;
 
-
+            //Demande une période à l'utilisateur et crée un nouveau tableau avec
+            //Les données de chaque prénoms sur la période demandé
             donneSurPeriode = demandePeriode(Donnees, texteProgramme);
-
+            //On tri les prénoms sur le nombre de naissance de façon décroissante
             donneSurPeriode = triSurNbNaissance(donneSurPeriode);
 
-
+            //On affiche les 10 premiers prénoms du tableau 
             for (int j = 0; j < 10; j++)
             {
                 int tmp = j + 1;
@@ -695,7 +711,8 @@ namespace Projet_Info
             int anneeFin = 0;
             bool anneeDebutOk = false;
             bool anneeFinOk = false;
-
+            //On demande à l'utilsateur de rentrer la première et la dernière
+            //année de la période voulu
             Console.Clear();
             while (!anneeDebutOk)
             {
@@ -711,7 +728,11 @@ namespace Projet_Info
                     affichageTexte("IncorrectYear", texteProgramme);
                     anneeDebutOk = false;
                 }
-
+                if (anneeDebut < 1900 || anneeDebut > 2013)
+                {
+                    affichageTexte("IncorrectYear", texteProgramme);
+                    anneeDebutOk = false;
+                }
             }
 
             while (!anneeFinOk)
@@ -728,10 +749,15 @@ namespace Projet_Info
                     affichageTexte("IncorrectYear", texteProgramme);
                     anneeFinOk = false;
                 }
+                if (anneeFin < 1900 || anneeFin > 2013)
+                {
+                    affichageTexte("IncorrectYear", texteProgramme);
+                    anneeFinOk = false;
+                }
 
             }
 
-
+            //On inverse les années si l'utilisateurs à inversé les entrées
             if (anneeFin < anneeDebut)
             {
                 affichageTexte("ReverseYear", texteProgramme);
@@ -739,7 +765,8 @@ namespace Projet_Info
                 anneeFin = anneeDebut;
                 anneeDebut = tmp;
             }
-
+            //On traite les données de la période en regroupant les prénoms (principalement en
+            //additionnant le nombre de triSurNbNaissance pour chaque prénoms sur la période
             periodeEtudiee = traitementDonneesSurPeriode(Donnees, anneeDebut, anneeFin);
 
             return periodeEtudiee;
@@ -763,15 +790,16 @@ namespace Projet_Info
             Prenom[] PrenomsPeriodeTemp = new Prenom[Donnees.Length];
 
 
-
+            //On parcours l'ensemble du tableau en entrée
             for (int i = 0; i < Donnees.Length; i++)
-            {
+            {   //Si l'année contenue dans la structure est comprise dans la période
                 if (Donnees[i].annee <= anneeFin && Donnees[i].annee >= anneeDebut)
-                {
+                {   
                     int j = 0;
                     estPresent = false;
+                    //On vérifie que le prénom n'existe pas déjà dans le nouveau tableau
                     while (j < nbCase && !estPresent)
-                    {
+                    {   //Si il existe on récupère l'indice de la case ou il est enregistré
                         if (Donnees[i].prenom == PrenomsPeriodeTemp[j].prenom)
                         {
 
@@ -785,20 +813,23 @@ namespace Projet_Info
                         j++;
 
                     }
-
+                    //Si le prénom est déjà dans le tableau on additionne le nombre
+                    //de naissance déjà enregistré avec le nombre de présence actuellement trairé
                     if (estPresent)
                     {
                         PrenomsPeriodeTemp[indexPrenom].nombrePrenom += Donnees[i].nombrePrenom;
 
                     }
-                    else
-                    {
+                    else//sinon on enregistre les données du nouveaux prénoms dans la tableau et 
+                        //on augmente son nombre de case
+                    {   
                         PrenomsPeriodeTemp[nbCase] = Donnees[i];
                         nbCase++;
                     }
                 }
             }
-
+            //On crée un tableau possédant le bon nombre de case et on y enregistre
+            //les données de chaque prénoms sur la période
             Prenom[] donneeSurPeriode = new Prenom[nbCase];
 
             for (int i = 0; i < nbCase; i++)
@@ -911,6 +942,12 @@ namespace Projet_Info
                     nbAnneeEnArriere = int.Parse(Console.ReadLine());
                 }
                 catch
+                {
+                    affichageTexte("IncorrectYear", texteProgramme);
+                    nbAnneeEnArriereOk = false;
+                }
+
+                if (nbAnneeEnArriere > 113)
                 {
                     affichageTexte("IncorrectYear", texteProgramme);
                     nbAnneeEnArriereOk = false;
