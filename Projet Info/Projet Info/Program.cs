@@ -862,12 +862,13 @@ namespace Projet_Info
             int indice;
             bool choixPrenom;
 
-
+            //On refait les même traitements que pour la question 2.
             prenomSurPeriode = demandePeriode(Donnees, texteProgramme);
             choixPrenom = choixSelection(texteProgramme);
             nbPrenom = prenomSurPeriode.Length;
 
-
+            //On demande si l'utilisateur souhaite entrer un prénom sinon on le 
+            //sélectionne de façon aléatoire
             if (choixPrenom)
             {
                 indice = demandeChoixPrenom(prenomSurPeriode, texteProgramme);
@@ -878,18 +879,19 @@ namespace Projet_Info
             }
 
             prenomChoisi = prenomSurPeriode[indice];
-
+            //On tri le tableau en fonction du nombre de naissance.
             prenomSurPeriode = triSurNbNaissance(prenomSurPeriode);
 
             int i = 0;
-
+            //On cherche le rang du prénom sur la période
             while (i < prenomSurPeriode.Length)
             {
                 if (prenomSurPeriode[i].prenom == prenomChoisi.prenom)
                     rangPrenom = i;
                 i++;
             }
-
+            //On affiche les différentes informations sur le prénom choisi sur la période donnée
+            //par l'utilisateur.
             Console.ForegroundColor = ConsoleColor.Red;
             affichageTexte("NumPeriode", texteProgramme, prenomChoisi.prenom, "" + prenomChoisi.nombrePrenom);
             rangPrenom = rangPrenom + 1;
@@ -931,7 +933,8 @@ namespace Projet_Info
             double ecartType;
 
             Console.Clear();
-
+            /*On demande à l'utilisateurs de rentré sur combien d'années
+             il souhaite étudier la tendance*/
             while (!nbAnneeEnArriereOk)
             {
                 nbAnneeEnArriereOk = true;
@@ -955,14 +958,17 @@ namespace Projet_Info
 
             }
 
+            //On crée deux période en fonction du nombre d'année arrière entré par 
+            // l'utilisateur
             debutSecondePeriode = 2013 - nbAnneeEnArriere;
             finPremierePeriode = debutSecondePeriode - 1;
 
+            /*On traite les données sur chacune de ces deux périodes.*/
             PremierePeriode = traitementDonneesSurPeriode(Donnees, 1900, finPremierePeriode);
             SecondePeriode = traitementDonneesSurPeriode(Donnees, debutSecondePeriode, 2013);
 
             choixPrenom = choixSelection(texteProgramme);
-
+            /*On demande à l'utilisateur si il souhaite ou non entrer lui même un prénom*/
             if (choixPrenom)
             {
                 prenomSecondePeriode = demandeChoixPrenomTendance(SecondePeriode, texteProgramme);
@@ -973,19 +979,28 @@ namespace Projet_Info
                 prenomSecondePeriode = Donnees[indicePrenomChoisi];
             }
 
+            /*On trie les prénoms par ordre alphabétique et on recherche
+             sa position dans le tableau correspondant à la première période*/
             triRapideSurPrenom(PremierePeriode, 0, PremierePeriode.Length - 1);
             int indicePremiere = rechercheDichotomiquePrenom(PremierePeriode, prenomSecondePeriode.prenom);
+
+            /*Si le prénom existe sur la première période on récupère ces informations sinon on met 
+             le nombre de naissance de ce prénom à 0 (ce qui peut être incorrecte si le prénom
+             à été donnée mais n'est pas dans le top 100 des années*/
             if (indicePremiere != -1)
                 prenomPremierePeriode = PremierePeriode[indicePremiere];
             else
                 prenomPremierePeriode.nombrePrenom = 0;
-
+            /*On calcul les moyennes sur chacune des périodes*/
             moyennePremierePeriode = calculMoyenne(prenomPremierePeriode, finPremierePeriode - 1900);
             moyenneSecondePeriode = calculMoyenne(prenomSecondePeriode, nbAnneeEnArriere);
-
-            ecartType = calculEcartType(Donnees, finPremierePeriode, moyennePremierePeriode, prenomPremierePeriode);
+            
+            /*On calcul l'écart type de la première période puis on calcule l'écart à la moyenne*/
+            ecartType = calculEcartType(Donnees, finPremierePeriode, moyennePremierePeriode, 
+                prenomPremierePeriode);
             ecartMoyenne = moyenneSecondePeriode - moyennePremierePeriode;
 
+            /*Ona ffiche les différentes informations sur la tendance du prénom*/
             Console.ForegroundColor = ConsoleColor.Red;
             affichageTexte("Trend", texteProgramme, prenomSecondePeriode.prenom, "" + nbAnneeEnArriere);
 
@@ -1060,8 +1075,11 @@ namespace Projet_Info
             bool prenomOk = false;
             string prenom = "null";
             int indice = 0;
-
+            //On fait un tri rapide par ordre alphabétique
             triRapideSurPrenom(DonneesPeriode, 0, DonneesPeriode.Length - 1);
+            /* On demande à l'utilisateurs de rentrer un prénom, si ce dernier
+             * n'existe pas sur la période passé en paramètres,
+             * on prévient l'utilisateur puis on met son nombre de naissance à 0*/
             while (!prenomOk)
             {
                 prenomOk = true;
