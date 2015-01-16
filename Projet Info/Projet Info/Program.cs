@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.IO; // necessaire pour la manipulation de fichers
+using System.IO; // nécessaire pour la manipulation de fichers
 
 
 namespace Projet_Info
@@ -15,7 +15,7 @@ namespace Projet_Info
         /*************************************/
 
         /// <summary>
-        /// Structure qui va contenir les différentes données d'un prénom 
+        /// Structure qui va contenir les différentes données, d'un prénom,
         /// contenues dans le fichier source
         /// </summary>
         public struct Prenom
@@ -145,13 +145,15 @@ namespace Projet_Info
         /*  FONCTIONS D'AFFICHAGE  */
         /***************************/
         /// <summary>
-        /// Fonction du choix de la langue.
+        /// Fonction du choix de la langue
         /// </summary>
         /// <returns></returns>
         static string choixLangue()
         {
             char choix = 'a';
             string langue = "aaa";
+
+            //Boucle du choix de la langue
             while (choix != 'f' && choix != 'e')
             {
                 Console.WriteLine("Choisissez votre langue : f pour Français, e pour Anglais \nPlease choose your language : e for English, f for French");
@@ -171,18 +173,18 @@ namespace Projet_Info
         }
 
         /// <summary>
-        /// Cette fonction va récupérer les données contenue dans un fichier passé en paramètre
-        /// et va les stockés dans un tableau de Texte
+        /// Cette fonction va récupérer les données contenues dans un fichier passé en paramètre
+        /// et va les stocker dans un tableau de Texte
         /// </summary>
         /// <param name="file">Le chemin du fichier de langue désiré</param>
-        /// <param name="Donneestexte">Le tableau dans lequel seront stockés les informations</param>
+        /// <param name="Donneestexte">Le tableau dans lequel seront stockées les informations</param>
         public static void recuperationTexteProgramme(String file, Texte[] Donneestexte)
         {
             System.Text.Encoding encoding = System.Text.Encoding.GetEncoding("utf-8");
             StreamReader monStreamReader = new StreamReader(file, encoding);
             string[] mot;
 
-            //Boucle qui va récupérer et stockés les textes à afficher
+            //Boucle qui va récupérer et stocker les textes à afficher
             for (int i = 0; i < Donneestexte.Length; i++)
             {
                 mot = monStreamReader.ReadLine().Split('\t');
@@ -250,9 +252,9 @@ namespace Projet_Info
         /// <summary>
         /// Cette fonction va afficher les données d'un prénom passé en paramètre
         /// </summary>
-        /// <param name="affichage">Prénom dont on veut afficher les différentes données</param>
+        /// <param name="affichage">Prénom dont on souhaite afficher les différentes données</param>
         /// <param name="texteProgramme">Ce tableau contient l'ensemble des Texte 
-        /// qui seront afficher</param>
+        /// qui seront affichés</param>
         public static void affichageDonnee(Prenom affichage, Texte[] texteProgramme)
         {
             Console.ForegroundColor = ConsoleColor.Red;
@@ -268,7 +270,7 @@ namespace Projet_Info
         /// Fonction qui va permettre le retour au menu lorsque l'un des traitements est terminé
         /// </summary>
         /// <param name="texteProgramme">Ce tableau contient l'ensemble des Texte 
-        /// qui seront afficher</param>
+        /// qui seront affichés</param>
         public static void retourMenu(Texte[] texteProgramme)
         {
             affichageTexte("ReturnToMenu", texteProgramme);
@@ -279,7 +281,7 @@ namespace Projet_Info
         /*          LECTURE DES DONNEES              */
         /*********************************************/
         /// <summary>
-        /// Cette fonction va compter le nombre total de ligne dans le fichier source
+        /// Cette fonction va compter le nombre total de lignes dans le fichier source
         /// </summary>
         /// <returns>Un entier indiquant le nombre de lignes comprises dans le fichier 
         /// source</returns>
@@ -291,7 +293,7 @@ namespace Projet_Info
                 StreamReader monStreamReader = new StreamReader(file, encoding);
                 int nbMots = 0;
                 string mot = monStreamReader.ReadLine();
-                //Boucle qui va compter le nombre de ligne du fichier texte
+                //Boucle qui va compter le nombre de lignes du fichier texte
                 while (mot != null)
                 {
 
@@ -303,7 +305,7 @@ namespace Projet_Info
             }
             catch (Exception ex)//Exception levé si l'ouverture à un problème
             {
-                // Code exécuté en cas d'exception 
+                //Code exécuté en cas d'exception 
                 Console.Write("Une erreur est survenue au cours de la lecture :");
                 Console.WriteLine(ex.Message);
             }
@@ -332,13 +334,13 @@ namespace Projet_Info
         }
 
         /// <summary>
-        /// cette fonction va mettre en forme les données récupérées sous forme de ligne de 
-        /// caractère en les enregistrant dans un tableau de structure Prenom
+        /// Cette fonction va mettre en forme les données récupérées sous forme de ligne de 
+        /// caractères en les enregistrant dans un tableau de structure Prenom
         /// </summary>
-        /// <param name="donneesBrutes">Le tableau qui contient les données enregistré sous forme 
+        /// <param name="donneesBrutes">Le tableau qui contient les données enregistrées sous forme 
         /// de chaînes de caractères</param>
         /// <returns>Un tableau de strcture prénom qui contiendra l'ensemble 
-        /// des données du fichiers source plus facilement utilisable</returns>
+        /// des données du fichiers source plus facilement utilisables</returns>
         public static Prenom[] miseEnFormeDonnees(string[] donneesBrutes)
         {
             Prenom[] Donnees = new Prenom[donneesBrutes.Length];
@@ -351,8 +353,8 @@ namespace Projet_Info
                 char enCours;
                 string ligne = donneesBrutes[i];
 
-                //Boucle qui va décompser chaque ligne en fonction des tabulations
-                //et qui va ensuite stockés les informations de chaque ligne dans une structure
+                //Boucle qui va décompter chaque ligne en fonction des tabulations
+                //et qui va ensuite stocker les informations de chaque ligne dans une structure
                 for (int j = 0; j < 4; j++)
                 {
                     enCours = ligne[indexBase];
@@ -397,13 +399,13 @@ namespace Projet_Info
         /***********************************************/
 
         /// <summary>
-        /// Cette fonction va trier de façon décroissante un tableau de prénom en fonction du nombre de naissance
+        /// Cette fonction va trier de façon décroissante un tableau de prénom en fonction du nombre de naissances
         /// </summary>
         /// <param name="Donnees">L'ensemble des données que l'on souhaite traiter</param>
         /// <returns>Le tableau passé en paramètre mais trié selon les naissances</returns>
         public static Prenom[] triSurNbNaissance(Prenom[] Donnees)
         {
-            // Tri du tableau avec algorithme à bulle (compléxité en n² voir par le remplacer pas un quicksort si possible)
+            // Tri du tableau avec algorithme à bulle (complexité en n² voir pour le remplacer par un quicksort si possible)
             int i = 1;
             int n = Donnees.Length;
 
@@ -429,11 +431,11 @@ namespace Projet_Info
         /// Cette fonction va permettre la partition du tableau dans le cas d'un tri
         /// utilisant l'algoritmhe quicksort
         /// </summary>
-        /// <param name="Donnees">La tableau que l'on désire trié</param>
+        /// <param name="Donnees">La tableau que l'on désire trier</param>
         /// <param name="premier">Le premier élément à partir duquel on va trier
         /// le tableau</param>
-        /// <param name="dernier">le dernier élément que l'on va trié</param>
-        /// <param name="pivot">Valeur qui determinera ou sera effectuer la partition
+        /// <param name="dernier">le dernier élément que l'on va trier</param>
+        /// <param name="pivot">Valeur qui determinera où sera effectuée la partition
         /// du tableau</param>
         /// <returns></returns>
         public static int partitionTriRapide(Prenom[] Donnees, int premier, int dernier, int pivot)
@@ -445,7 +447,7 @@ namespace Projet_Info
             int j = premier;
 
             for (int i = premier; i <= dernier - 1; i++)
-            {   //Si la valeur en i est inférieur à la valeur en pivot, on échange les deux
+            {   //Si la valeur en i est inférieure à la valeur en pivot, on échange les deux
                 if (String.Compare(Donnees[i].prenom, Donnees[dernier].prenom) < 0)
                 {
                     temp = Donnees[i];
@@ -464,12 +466,12 @@ namespace Projet_Info
         /// <summary>
         /// Algorithme récurssif pour trier un tableau par ordre alphabétique sur les prénoms
         /// en utilisant l'alogrithme quicksort beaucoup plus rapide et avec
-        /// une compléxité faible (de l'ordre de nLog(n) en moyenne)
+        /// une complexité faible (de l'ordre de n*Log(n) en moyenne)
         /// </summary>
-        /// <param name="Donnees">Les données que l'ont souhaite triées</param>
-        /// <param name="premier">Borne inférieur à partir de laquelle on va trier
+        /// <param name="Donnees">Les données que l'ont souhaite trier</param>
+        /// <param name="premier">Borne inférieure à partir de laquelle on va trier
         /// le tableau (par défaut = 0)</param>
-        /// <param name="dernier">Borne supérieur pour le tri, on ira jusqu'a 
+        /// <param name="dernier">Borne supérieure pour le tri, on ira jusqu'a 
         /// cette dernière (par défaut = taille-1)</param>
         public static void triRapideSurPrenom(Prenom[] Donnees, int premier, int dernier)
         {
@@ -479,20 +481,20 @@ namespace Projet_Info
                 pivot = premier;//Sélection du pivot (arbitraire)
                 //On partitionne le tableau
                 pivot = partitionTriRapide(Donnees, premier, dernier, pivot);
-                //On rapelle triRapideSurPrenom sur chacun des sous tableau
+                //On rappelle triRapideSurPrenom sur chacun des sous-tableaux
                 triRapideSurPrenom(Donnees, premier, pivot - 1);
                 triRapideSurPrenom(Donnees, pivot + 1, dernier);
             }
         }
 
         /// <summary>
-        /// Recherche d'un prénom dans un tableau trué en utilisant un algorithme de recherche
+        /// Recherche d'un prénom dans un tableau trié en utilisant un algorithme de recherche
         /// par dichotomie
         /// </summary>
-        /// <param name="Donnees">Les Données sur lesquelles ont effectue la recherche</param>
-        /// <param name="prenom">Le prenom que l'on souhaite trouvé</param>
+        /// <param name="Donnees">Les données sur lesquelles ont effectue la recherche</param>
+        /// <param name="prenom">Le prénom que l'on souhaite trouver</param>
         /// <returns>La position du prénom dans le tableau
-        /// retoourne -1 si le prénom ne s'y trouve pas</returns>
+        /// retourne -1 si le prénom ne s'y trouve pas</returns>
         public static int rechercheDichotomiquePrenom(Prenom[] Donnees, string prenom)
         {
             int debut = 0;
@@ -529,8 +531,8 @@ namespace Projet_Info
         /// l'utilisateur et va ensuite afficher les données de ce prénom
         /// </summary>
         /// <param name="texteProgramme">Ce tableau contient l'ensemble des Texte 
-        /// qui seront afficher</param>
-        /// <param name="Donnees">L'ensemble des données du fichiers sources</param>
+        /// qui seront affichés</param>
+        /// <param name="Donnees">L'ensemble des données du fichier source</param>
         public static void prenomSurUneAnnee(Prenom[] Donnees, Texte[] texteProgramme)
         {
             Random rand = new Random();
@@ -582,10 +584,10 @@ namespace Projet_Info
         }
 
         /// <summary>
-        /// Cette fonction va demander à l'utilisateur si il désire entrer lui même un prénom
+        /// Cette fonction va demander à l'utilisateur s'il désire entrer lui-même un prénom
         /// </summary>
         /// <param name="texteProgramme">Ce tableau contient l'ensemble des Texte 
-        /// qui seront afficher</param>
+        /// qui seront affichés</param>
         /// <returns></returns>
         public static bool choixSelection(Texte[] texteProgramme)
         {
@@ -620,15 +622,15 @@ namespace Projet_Info
         }
 
         /// <summary>
-        /// Cette fonction va demander d'entrer un prenom à l'utilisateur et va ensuite vérifier 
+        /// Cette fonction va demander d'entrer un prénom à l'utilisateur et va ensuite vérifier 
         /// si ce prénom existe bien avant de retourner son indice dans le tableau 
-        /// passé en paramètes
+        /// passé en paramètre
         /// </summary>
         /// <param name="Donnees">Tableau qui contient l'ensemble des prénoms 
         /// sur la période voulue</param>
         /// <param name="texteProgramme">Ce tableau contient l'ensemble des Texte 
-        /// qui seront afficher</param>        
-        /// <returns>l'indice du prénom choisi dans le tableau en paramètre</returns>
+        /// qui seront affichés</param>        
+        /// <returns>L'indice du prénom choisi dans le tableau en paramètre</returns>
         public static int demandeChoixPrenom(Prenom[] Donnees, Texte[] texteProgramme)
         {
             bool prenomOk = false;
@@ -637,7 +639,7 @@ namespace Projet_Info
             //Tri les prénoms par ordre alphabétique 
             triRapideSurPrenom(Donnees, 0, Donnees.Length - 1);
             //Demande à l'utilisateur de rentrer un prénom et boucle si le prénom est
-            //incorrecte ou si il n'existe pas
+            //incorrect ou s'il n'existe pas
             while (!prenomOk || indice == -1)
             {
                 prenomOk = true;
@@ -657,7 +659,7 @@ namespace Projet_Info
                 if (indice == -1)
                     affichageTexte("NotFound", texteProgramme);
             }
-            //On retourne l'indice du tableau dans lequels esr contenue le prénom
+            //On retourne l'indice du tableau dans lequels est contenu le prénom
             return indice;
 
 
@@ -668,21 +670,21 @@ namespace Projet_Info
         /**********************************************/
 
         /// <summary>
-        /// Cette fonction va afficher le top10 des prénoms sur une période données
-        /// par l'tilisateur
+        /// Cette fonction va afficher le Top10 des prénoms sur une période donnée
+        /// par l'utilisateur
         /// </summary>
         /// <param name="texteProgramme">Ce tableau contient l'ensemble des Texte 
-        /// qui seront afficher</param>
+        /// qui seront affichés</param>
         /// <param name="Donnees">L'ensemble des données que l'on souhaite traiter</param>
         public static void top10PrenomsPeriode(Prenom[] Donnees, Texte[] texteProgramme)
         {
 
             Prenom[] donneSurPeriode;
 
-            //Demande une période à l'utilisateur et crée un nouveau tableau avec
-            //Les données de chaque prénoms sur la période demandé
+            //Demande une période à l'utilisateur et créé un nouveau tableau avec
+            //les données de chaque prénom sur la période demandée
             donneSurPeriode = demandePeriode(Donnees, texteProgramme);
-            //On tri les prénoms sur le nombre de naissance de façon décroissante
+            //On trie les prénoms sur le nombre de naissance dans l'ordre décroissant
             donneSurPeriode = triSurNbNaissance(donneSurPeriode);
 
             //On affiche les 10 premiers prénoms du tableau 
@@ -694,12 +696,12 @@ namespace Projet_Info
         }
 
         /// <summary>
-        /// Cette fonction va demander à l'utilisatur d'enter une période sur laquelle il souhaite
+        /// Cette fonction va demander à l'utilisateur d'entrer une période sur laquelle il souhaite
         /// étudier les prénoms. Cette fonction va ensuite créer un nouveau tableau rassemblant
         /// les prénoms sur cette période.
         /// </summary>
         /// <param name="Donnees">L'ensemble des données du fichiers sources</param>
-        /// <returns>Tableau de Prenom contenant les prénoms sur la période de 
+        /// <returns>Tableau de prénoms contenant les prénoms sur la période demandée par
         /// l'utilisateur</returns>
         public static Prenom[] demandePeriode(Prenom[] Donnees, Texte[] texteProgramme)
         {
@@ -712,7 +714,7 @@ namespace Projet_Info
             bool anneeDebutOk = false;
             bool anneeFinOk = false;
             //On demande à l'utilsateur de rentrer la première et la dernière
-            //année de la période voulu
+            //année de la période voulue
             Console.Clear();
             while (!anneeDebutOk)
             {
@@ -757,7 +759,7 @@ namespace Projet_Info
 
             }
 
-            //On inverse les années si l'utilisateurs à inversé les entrées
+            //On inverse les années si l'utilisateur a inversé les entrées
             if (anneeFin < anneeDebut)
             {
                 affichageTexte("ReverseYear", texteProgramme);
@@ -766,7 +768,7 @@ namespace Projet_Info
                 anneeDebut = tmp;
             }
             //On traite les données de la période en regroupant les prénoms (principalement en
-            //additionnant le nombre de triSurNbNaissance pour chaque prénoms sur la période
+            //additionnant le nombre de triSurNbNaissance pour chaque prénom sur la période)
             periodeEtudiee = traitementDonneesSurPeriode(Donnees, anneeDebut, anneeFin);
 
             return periodeEtudiee;
@@ -775,13 +777,13 @@ namespace Projet_Info
 
         /// <summary>
         /// Cette fonction va créer un tableau qui contiendra les prénoms sur une période
-        /// donnée avec pour chaque prénom, le nombre total de fois ou il apparaît
+        /// donnée avec pour chaque prénom, le nombre total de fois où il apparaît
         /// </summary>
         /// <param name="Donnees">L'ensemble des données que l'on souhaite traiter</param>
         /// <param name="anneeDebut">L'année de début de la période</param>
         /// <param name="anneeFin">L'année de fin de la période</param>
         /// <returns>Un tableau de prénom contenant les prénoms de la
-        /// période avec le nombre total d'apparition sur cette période</returns>
+        /// période avec le nombre total d'apparitions sur cette période</returns>
         public static Prenom[] traitementDonneesSurPeriode(Prenom[] Donnees, int anneeDebut, int anneeFin)
         {
             int nbCase = 0;
@@ -790,7 +792,7 @@ namespace Projet_Info
             Prenom[] PrenomsPeriodeTemp = new Prenom[Donnees.Length];
 
 
-            //On parcours l'ensemble du tableau en entrée
+            //On parcourt l'ensemble du tableau en entrée
             for (int i = 0; i < Donnees.Length; i++)
             {   //Si l'année contenue dans la structure est comprise dans la période
                 if (Donnees[i].annee <= anneeFin && Donnees[i].annee >= anneeDebut)
@@ -799,7 +801,7 @@ namespace Projet_Info
                     estPresent = false;
                     //On vérifie que le prénom n'existe pas déjà dans le nouveau tableau
                     while (j < nbCase && !estPresent)
-                    {   //Si il existe on récupère l'indice de la case ou il est enregistré
+                    {   //S'il existe on récupère l'indice de la case où il est enregistré
                         if (Donnees[i].prenom == PrenomsPeriodeTemp[j].prenom)
                         {
 
@@ -814,13 +816,13 @@ namespace Projet_Info
 
                     }
                     //Si le prénom est déjà dans le tableau on additionne le nombre
-                    //de naissance déjà enregistré avec le nombre de présence actuellement trairé
+                    //de naissances déjà enregistré avec le nombre de présence actuellement traité
                     if (estPresent)
                     {
                         PrenomsPeriodeTemp[indexPrenom].nombrePrenom += Donnees[i].nombrePrenom;
 
                     }
-                    else//sinon on enregistre les données du nouveaux prénoms dans la tableau et 
+                    else//sinon on enregistre les données du nouveau prénom dans la tableau et 
                         //on augmente son nombre de case
                     {   
                         PrenomsPeriodeTemp[nbCase] = Donnees[i];
@@ -828,8 +830,8 @@ namespace Projet_Info
                     }
                 }
             }
-            //On crée un tableau possédant le bon nombre de case et on y enregistre
-            //les données de chaque prénoms sur la période
+            //On crée un tableau possédant le bon nombre de cases et on y enregistre
+            //les données de chaque prénom sur la période
             Prenom[] donneeSurPeriode = new Prenom[nbCase];
 
             for (int i = 0; i < nbCase; i++)
@@ -846,12 +848,12 @@ namespace Projet_Info
         /**********************************************/
 
         /// <summary>
-        /// Cette fonction va afficher les informations d'un prénoms aléatoire sur l'ensemble 
+        /// Cette fonction va afficher les informations d'un prénom aléatoire sur l'ensemble 
         /// d'une période
         /// </summary>
         /// <param name="Donnees">L'ensemble des données que l'on souhaite traiter</param>
         /// <param name="texteProgramme">Ce tableau contient l'ensemble des Texte 
-        /// qui seront afficher</param>
+        /// qui seront affichés</param>
         public static void nomPeriodeDonnee(Prenom[] Donnees, Texte[] texteProgramme)
         {
             Prenom[] prenomSurPeriode;
@@ -862,7 +864,7 @@ namespace Projet_Info
             int indice;
             bool choixPrenom;
 
-            //On refait les même traitements que pour la question 2.
+            //On refait les mêmes traitements que pour la question 2.
             prenomSurPeriode = demandePeriode(Donnees, texteProgramme);
             choixPrenom = choixSelection(texteProgramme);
             nbPrenom = prenomSurPeriode.Length;
@@ -879,7 +881,7 @@ namespace Projet_Info
             }
 
             prenomChoisi = prenomSurPeriode[indice];
-            //On tri le tableau en fonction du nombre de naissance.
+            //On trie le tableau en fonction du nombre de naissances
             prenomSurPeriode = triSurNbNaissance(prenomSurPeriode);
 
             int i = 0;
@@ -891,7 +893,7 @@ namespace Projet_Info
                 i++;
             }
             //On affiche les différentes informations sur le prénom choisi sur la période donnée
-            //par l'utilisateur.
+            //par l'utilisateur
             Console.ForegroundColor = ConsoleColor.Red;
             affichageTexte("NumPeriode", texteProgramme, prenomChoisi.prenom, "" + prenomChoisi.nombrePrenom);
             rangPrenom = rangPrenom + 1;
@@ -910,7 +912,7 @@ namespace Projet_Info
         /// </summary>
         /// <param name="Donnees">L'ensemble des données que l'on souhaite traiter</param>
         /// <param name="texteProgramme">Ce tableau contient l'ensemble des Texte 
-        /// qui seront afficher</param>
+        /// qui seront affichés</param>
         public static void tendancePrenom(Prenom[] Donnees, Texte[] texteProgramme)
         {
             int nbAnneeEnArriere = 0;
@@ -933,7 +935,7 @@ namespace Projet_Info
             double ecartType;
 
             Console.Clear();
-            /*On demande à l'utilisateurs de rentré sur combien d'années
+            /*On demande à l'utilisateurs de rentrer sur combien d'années
              il souhaite étudier la tendance*/
             while (!nbAnneeEnArriereOk)
             {
@@ -958,7 +960,7 @@ namespace Projet_Info
 
             }
 
-            //On crée deux période en fonction du nombre d'année arrière entré par 
+            //On crée deux périodes en fonction du nombre d'années arrières entré par 
             // l'utilisateur
             debutSecondePeriode = 2013 - nbAnneeEnArriere;
             finPremierePeriode = debutSecondePeriode - 1;
@@ -968,7 +970,7 @@ namespace Projet_Info
             SecondePeriode = traitementDonneesSurPeriode(Donnees, debutSecondePeriode, 2013);
 
             choixPrenom = choixSelection(texteProgramme);
-            /*On demande à l'utilisateur si il souhaite ou non entrer lui même un prénom*/
+            /*On demande à l'utilisateur s'il souhaite ou non entrer lui-même un prénom*/
             if (choixPrenom)
             {
                 prenomSecondePeriode = demandeChoixPrenomTendance(SecondePeriode, texteProgramme);
@@ -985,22 +987,22 @@ namespace Projet_Info
             int indicePremiere = rechercheDichotomiquePrenom(PremierePeriode, prenomSecondePeriode.prenom);
 
             /*Si le prénom existe sur la première période on récupère ces informations sinon on met 
-             le nombre de naissance de ce prénom à 0 (ce qui peut être incorrecte si le prénom
-             à été donnée mais n'est pas dans le top 100 des années*/
+             le nombre de naissance de ce prénom à 0 (ce qui peut être incorrect si le prénom
+             a été donné mais n'est pas dans le top 100 des années*/
             if (indicePremiere != -1)
                 prenomPremierePeriode = PremierePeriode[indicePremiere];
             else
                 prenomPremierePeriode.nombrePrenom = 0;
-            /*On calcul les moyennes sur chacune des périodes*/
+            /*On calcule les moyennes sur chacunes des périodes*/
             moyennePremierePeriode = calculMoyenne(prenomPremierePeriode, finPremierePeriode - 1900);
             moyenneSecondePeriode = calculMoyenne(prenomSecondePeriode, nbAnneeEnArriere);
             
-            /*On calcul l'écart type de la première période puis on calcule l'écart à la moyenne*/
+            /*On calcule l'écart-type de la première période puis on calcule l'écart à la moyenne*/
             ecartType = calculEcartType(Donnees, finPremierePeriode, moyennePremierePeriode, 
                 prenomPremierePeriode);
             ecartMoyenne = moyenneSecondePeriode - moyennePremierePeriode;
 
-            /*Ona ffiche les différentes informations sur la tendance du prénom*/
+            /*On affiche les différentes informations sur la tendance du prénom*/
             Console.ForegroundColor = ConsoleColor.Red;
             affichageTexte("Trend", texteProgramme, prenomSecondePeriode.prenom, "" + nbAnneeEnArriere);
 
@@ -1018,12 +1020,12 @@ namespace Projet_Info
         }
 
         /// <summary>
-        /// Cette fonction va calculer la moyenne d'apparition d'un prénom sur 
-        /// nombre d'année donné
+        /// Cette fonction va calculer la moyenne d'apparitions d'un prénom sur 
+        /// nombre d'années donné
         /// </summary>
-        /// <param name="prenom">Les informations du prénom dont on vaut la moyenne</param>
-        /// <param name="nbAnnee">Lenombre d'année sur lesquels on étudie le prénom</param>
-        /// <returns>La moyenne d'apparition du prénom</returns>
+        /// <param name="prenom">Les informations du prénom dont on veut la moyenne</param>
+        /// <param name="nbAnnee">Le nombre d'années sur lesquelles on étudie le prénom</param>
+        /// <returns>La moyenne d'apparitions du prénom</returns>
         public static double calculMoyenne(Prenom prenom, int nbAnnee)
         {
             double moyenne = prenom.nombrePrenom * 1.0 / nbAnnee * 1.0;
@@ -1032,13 +1034,13 @@ namespace Projet_Info
         }
 
         /// <summary>
-        /// Cette moyenne va calculer l'écart type d'un prénom sur une période donnée
+        /// Cette moyenne va calculer l'écart-type d'un prénom sur une période donnée
         /// </summary>
         /// <param name="Donnees">L'ensemble des données que l'on souhaite traiter</param>
         /// <param name="finPeriode">La date de fin de la période sur laquelle on veut
-        /// l'écart typé (elle début toujours à 1900) </param>
-        /// <param name="moyenne">La moyenne d'apparition du prénom sur la période</param>
-        /// <param name="prenom">Les informations du prénom dont on vaut la moyenne</param>
+        /// l'écart-type (elle débute toujours à 1900) </param>
+        /// <param name="moyenne">La moyenne d'apparitions du prénom sur la période</param>
+        /// <param name="prenom">Les informations du prénom dont on veut la moyenne</param>
         /// <returns></returns>
         public static double calculEcartType(Prenom[] Donnees, int finPeriode, double moyenne, Prenom prenom)
         {
@@ -1065,10 +1067,10 @@ namespace Projet_Info
         /// Cette fonction va demander à l'utilisateur de rentrer un prénom mais avec 
         /// quelques modifications pour l'adapter à la question sur la tendance
         /// </summary>
-        /// <param name="DonneesPeriode">Les prénoms sur un périodes données</param>
+        /// <param name="DonneesPeriode">Les prénoms sur une période donnée</param>
         /// <param name="texteProgramme">Ce tableau contient l'ensemble des Texte 
-        /// qui seront afficher</param>>
-        /// <returns>va retourner une structure prénom correspondant au prénom choisie par
+        /// qui seront affichés</param>>
+        /// <returns>Retourne une structure prénom correspondant au prénom choisi par
         /// l'utilisateur</returns>
         public static Prenom demandeChoixPrenomTendance(Prenom[] DonneesPeriode, Texte[] texteProgramme)
         {
@@ -1078,7 +1080,7 @@ namespace Projet_Info
             //On fait un tri rapide par ordre alphabétique
             triRapideSurPrenom(DonneesPeriode, 0, DonneesPeriode.Length - 1);
             /* On demande à l'utilisateurs de rentrer un prénom, si ce dernier
-             * n'existe pas sur la période passé en paramètres,
+             * n'existe pas sur la période passée en paramètre,
              * on prévient l'utilisateur puis on met son nombre de naissance à 0*/
             while (!prenomOk)
             {
